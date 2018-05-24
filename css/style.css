@@ -10,7 +10,15 @@ body {
     border : 1px solid white;
     background-color:rgba(255, 255, 255, 0.7);
 }
+#details_doudou,#pic_doudou {
+    display: none;
+    border : 1px solid white;
+    background-color:rgba(255, 255, 255, 0.7);
+}
 footer {
     text-align: center;
-
+}
+#details_doudou, p {
+    color: black;
+    font-size: 5e;
 }
