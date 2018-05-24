@@ -1,0 +1,56 @@
+<form class="col-lg-6" name="ajout_doudou" action="add_doudou.php" method="post">
+        <h3>Chercher mon Doudou</h3>
+        <div class="form-group">
+                
+                <input id="text" type="text" class="form-control" placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+                
+                <input id="text" type="text" class="form-control" placeholder="Votre prénom">
+        </div>
+        <div class="form-group">
+                
+                <input id="text" type="text" class="form-control" placeholder="Lieu de la perte">
+        </div>
+        <div class="form-group">
+                
+                
+                <input id="date" type="text" class="form-control" placeholder="Date de la perte">
+        </div>
+        <div class="form-group">
+                <label for="textarea">Description : </label>
+                <textarea id="textarea" type="textarea" class="form-control"></textarea>
+        </div>
+        <fieldset class="form-group">
+                <div class="row">
+                        <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                        <div class="col-sm-10">
+                                <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="gridRadios1">
+                                                Peluche
+                                        </label>
+                                </div>
+                                <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                        <label class="form-check-label" for="gridRadios2">
+                                                Chiffe
+                                        </label>
+                                </div>
+                                <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" >
+                                        <label class="form-check-label" for="gridRadios3">
+                                                Poupée
+                                        </label>
+                                </div>
+                                <div class="form-check disabled">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" >
+                                        <label class="form-check-label" for="gridRadios3">
+                                                Non-défini
+                                        </label>
+                                </div>
+                        </div>
+                </div>
+                <button type="button" class="btn btn-dark">Envoyer</button>
+                <a href="../doudou-app/index.php"> <button type="button" class="btn btn-dark">Retour</button></a>
+</form>
