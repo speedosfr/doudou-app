@@ -36,35 +36,46 @@ function show_all() {
 
             $("#content").on("click", "img", function () {
                 var id = $(this).attr("data.id")
-                console.log(id)
+               
                 $("main").css("display", "none");
                 $("#titre").css("display", "none");
                 $('#details_doudou').css("display", "block");
-                searchDetails(id)
+                searchDetails(id,response.data)
+
+                console.log("test" +id)
             });
-
-            function searchDetails(id) {
-
-                console.log("l\'id est " + id + " et l\'image : " + response.data[id - 1].image)
-                $("#details_doudou").empty();
-                var pic = $("<img>").attr("src", "http://localhost:8082/Doudou/doudou-sf/public/img/photos/" + response.data[id - 1].image)
-                pic.css("width", 200)
-                pic.css("height", 300)
-                pic.css("border", "2px solid white")
-                pic.css("border-radius", "25px")
-
-                var color = response.data[id - 1].color
-                var date = response.data[id - 1].dateFind.date
-                var place = response.data[id - 1].placeFind
-                var type = response.data[id - 1].type
-                var lat = response.data[id - 1].lat
-                var lng = response.data[id - 1].lng
-
-                $("#details_doudou").html("<p>Ce doudou de couleur " + color + " a été trouvé le " + date + " à " + place + " qui est de type " + type +
-                    "</p>");
-                $("#details_doudou").append(pic);
-
-
-            }
+           
         })
+
+        function searchDetails(id, data) {    
+
+            for (var i = 0; i < data.length; i++) {             
+
+                if (id == data[i].id) { 
+                    
+                    $("#details_doudou").empty();
+                    var pic = $("<img>").attr("src", "http://localhost:8082/Doudou/doudou-sf/public/img/photos/" + data[id].image)
+                    pic.css("width", 200)
+                    pic.css("height", 300)
+                    pic.css("border", "2px solid white")
+                    pic.css("border-radius", "25px")
+        
+                    var color = data[id].color
+                    var date = data[id].dateFind
+                    var place = data[id].placeFind
+                    var type = data[id].type
+                    var lat = data[id].lat
+                    var lng = data[id].lng
+        
+                    $("#details_doudou").html("<p>Ce doudou de couleur " + color + " a été trouvé le " + date + " à " + place + " qui est de type " + type +
+                        "</p>");
+                    $("#details_doudou").append(pic);          
+                    
+                }else{
+                    
+                }            
+
+        }
 }
+}
+
