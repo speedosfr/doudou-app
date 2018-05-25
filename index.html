@@ -16,7 +16,7 @@
         <div class="container">
                 <div class="row justify-content-around">
                         <button id="search_btn" class="btn btn-dark " type="button">Chercher</button>
-                        <button class="btn btn-dark " type="button">Trouver</button>
+                        <button id="find_btn" class="btn btn-dark " type="button">Trouver</button>
                 </div>
 
                 <div class="row justify-content-center">
@@ -86,6 +86,60 @@
                                         <button id="send_btn" class="btn btn-dark">Envoyer</button>
                                         <button type="button" class="btn btn-dark">Retour</button>
                                 </fieldset>
+                        </form>
+                </div>
+                 <!------------------------------------------FORMULAIRE DE TROUVAILLE------------------------------------------- -->
+                 <div id="form_find">
+                        <form class="col-lg-6" id="find_doudou" action="" method="post">
+                                <h3>Déposer un Doudou</h3>
+                                <div class="form-group">
+
+                                        <input id="couleur" name="color" type="text" class="form-control" placeholder="Couleur du doudou">
+                                </div>
+                                <fieldset class="form-group">
+                                        <div class="row">
+                                                <legend class="col-form-label col-sm-2 pt-0">Type</legend>
+                                                <div class="col-sm-10">
+                                                        <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="type" id="gridRadios1" value="option1" checked>
+                                                                <label class="form-check-label" for="gridRadios1">
+                                                                        Peluche
+                                                                </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="type" id="gridRadios2" value="option2">
+                                                                <label class="form-check-label" for="gridRadios2">
+                                                                        Chiffe
+                                                                </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="type" id="gridRadios3" value="option3">
+                                                                <label class="form-check-label" for="gridRadios3">
+                                                                        Poupée
+                                                                </label>
+                                                        </div>
+                                                        <div class="form-check disabled">
+                                                                <input class="form-check-input" type="radio" name="type" id="gridRadios3" value="option3">
+                                                                <label class="form-check-label" for="gridRadios3">
+                                                                        Non-défini
+                                                                </label>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </fieldset>
+                                <div class="form-group">
+
+                                        <input id="lieu" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte">
+                                </div>
+                                <div class="form-group">
+
+                                        <input id="photo" name="photo" type="texte" class="form-control" placeholder="Photo du doudou trouvé">
+                                </div>
+                                <div class="form-group">
+                                        <button id="push_btn" class="btn btn-dark">Envoyer</button>
+                                        <button type="button" class="btn btn-dark">Retour</button>
+                                </div>
+                                
                         </form>
                 </div>
                 <!------------------------------------------AFFICHAGE DETAILS DOUDOU---------------------------------------------->

@@ -5,7 +5,7 @@ body {
     background: url(../img/bg.jpg) no-repeat ; 
      
 }
-#form_search {
+#form_search, #form_find {
     display: none;
     border : 1px solid white;
     background-color:rgba(255, 255, 255, 0.7);
