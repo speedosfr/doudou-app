@@ -21,3 +21,7 @@ body {
 footer {
     text-align: center;
 }
+#details_doudou, p {
+    color: black;
+    font-size: 5e;
+}
