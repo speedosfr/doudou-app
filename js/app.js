@@ -18,7 +18,6 @@ $("#send_btn").click(function(){
     console.log("je passe devant le envoyer");
 });
 
-
 function show_all() {
 
     $.ajax({
@@ -52,3 +51,17 @@ function show_all() {
         
     });
 }
+
+function find_doudou(){
+    $.ajax({
+        url : "http://localhost/doudou/doudou-sf/public/api/v1/doudou/",
+        method : "POST",
+        data : $( "#find_doudou" ).serialize(),
+    })
+}
+
+$("#push_btn").click(function(e){
+    e.preventDefault();
+    find_doudou();
+
+})
