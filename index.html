@@ -16,6 +16,7 @@
         <div class="container">
                 <div class="row justify-content-around">
                         <button id="search_btn" class="btn btn-dark " type="button">Chercher</button>
+                        <button id="id_btn" class="btn btn-dark " type="button">Détenteur</button>
                         <button id="find_btn" class="btn btn-dark " type="button">Trouver</button>
                 </div>
 
@@ -28,6 +29,25 @@
                 <main id="content" class="row justify-content-center">
 
                 </main>
+                <!------------------------------------------FORMULAIRE DE PERSONNE------------------------------------------- -->
+                <div id="id_form">
+                <form class="col-lg-6" name="ajout_doudou" action="" method="post">
+                        <h3>Mon identité</h3>
+                        <div class="form-group">
+
+                                <input id="text" type="text" class="form-control" placeholder="Votre nom">
+                        </div>
+                        <div class="form-group">
+
+                                <input id="text" type="text" class="form-control" placeholder="Votre prénom">
+                        </div>
+                        <div class="form-group">
+
+                                <input id="text" type="text" class="form-control" placeholder="Votre Telephone">
+                        </div>
+                        <button id="send_btn" class="btn btn-dark">Envoyer</button>
+                        <button type="back_button" class="btn btn-dark">Retour</button>
+                </div>
                 <!------------------------------------------FORMULAIRE DE RECHERCHE------------------------------------------- -->
                 <div id="form_search">
                         <form class="col-lg-6" name="ajout_doudou" action="" method="post">
@@ -84,7 +104,7 @@
                                                 </div>
                                         </div>
                                         <button id="send_btn" class="btn btn-dark">Envoyer</button>
-                                        <button type="button" class="btn btn-dark">Retour</button>
+                                        <button type="back_button" class="btn btn-dark">Retour</button>
                                 </fieldset>
                         </form>
                 </div>
@@ -137,7 +157,7 @@
                                 </div>
                                 <div class="form-group">
                                         <button id="push_btn" class="btn btn-dark">Envoyer</button>
-                                        <button type="button" class="btn btn-dark">Retour</button>
+                                        <button type="back_button" class="btn btn-dark">Retour</button>
                                 </div>
                                 
                         </form>
@@ -146,10 +166,10 @@
                 <div id="details_doudou"> 
                                 <h3>DETAILS DU DOUDOU</h3>
                         <div id="pic_doudou"></div>
-                        <div id="map"></div>
-                        
+                        <div id="map"></div>                      
                 </div>
                 
+                <!-------------------------------------------Fin Container------------------------------------------------>
 
         </div>
         
