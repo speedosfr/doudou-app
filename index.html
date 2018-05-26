@@ -14,16 +14,17 @@
 
 <body>
         <div class="container">
-                <div class="row justify-content-around">
-                        <button id="search_btn" class="btn btn-dark " type="button">Chercher</button>
-                        <button id="id_btn" class="btn btn-dark " type="button">Détenteur</button>
-                        <button id="find_btn" class="btn btn-dark " type="button">Trouver</button>
-                </div>
+            
+                <div class="btn-group row justify-center" role="group" aria-label="Basic example">
+                        <button id="search_btn" type="button" class="btn btn-secondary">Chercher</button>
+                        <button id="id_btn" type="button" class="btn btn-secondary">Detenteur</button>
+                        <button id="find_btn" type="button" class="btn btn-secondary">Trouver</button>
+                      </div>
 
                 <div class="row justify-content-center">
-                       <div id="titre">
-                               <h1>SOS Doudou</h1>
-                        </div> 
+                        <div id="titre">
+                                <h1>SOS Doudou</h1>
+                        </div>
                 </div>
                 <!-------------------------------------AFFICHAGE PHOTOS PAGE ACCUEIL----------------------------------------- -->
                 <main id="content" class="row justify-content-center">
@@ -31,27 +32,8 @@
                 </main>
                 <!------------------------------------------FORMULAIRE DE PERSONNE------------------------------------------- -->
                 <div id="id_form">
-                <form class="col-lg-6" name="ajout_doudou" action="" method="post">
-                        <h3>Mon identité</h3>
-                        <div class="form-group">
-
-                                <input id="text" type="text" class="form-control" placeholder="Votre nom">
-                        </div>
-                        <div class="form-group">
-
-                                <input id="text" type="text" class="form-control" placeholder="Votre prénom">
-                        </div>
-                        <div class="form-group">
-
-                                <input id="text" type="text" class="form-control" placeholder="Votre Telephone">
-                        </div>
-                        <button id="send_btn" class="btn btn-dark">Envoyer</button>
-                        <button type="back_button" class="btn btn-dark">Retour</button>
-                </div>
-                <!------------------------------------------FORMULAIRE DE RECHERCHE------------------------------------------- -->
-                <div id="form_search">
                         <form class="col-lg-6" name="ajout_doudou" action="" method="post">
-                                <h3>Chercher mon Doudou</h3>
+                                <h3>Mon identité</h3>
                                 <div class="form-group">
 
                                         <input id="text" type="text" class="form-control" placeholder="Votre nom">
@@ -62,41 +44,60 @@
                                 </div>
                                 <div class="form-group">
 
-                                        <input id="text" type="text" class="form-control" placeholder="Lieu de la perte">
+                                        <input id="text" type="text" class="form-control" placeholder="Votre Telephone">
+                                </div>
+                                <button id="send_btn" class="btn btn-dark">Envoyer</button>
+                                <button type="back_button" class="btn btn-dark">Retour</button>
+                </div>
+                <!------------------------------------------FORMULAIRE DE RECHERCHE------------------------------------------- -->
+                <div id="form_search">
+                        <form class="col-lg-6" name="ajout_doudou" action="" method="post">
+                                <h3>Chercher mon Doudou</h3>
+                                <div class="form-group">
+
+                                        <input id="text" name= "nom" type="text" class="form-control" placeholder="Votre nom">
+                                </div>
+                                <div class="form-group">
+
+                                        <input id="text" name="prenom" type="text" class="form-control" placeholder="Votre prénom">
+                                </div>
+                                <div class="form-group">
+
+                                        <input id="text" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte">
                                 </div>
                                 <div class="form-group">
 
 
-                                        <input id="date" type="date" class="form-control" placeholder="Date de la perte">
+                                        <input id="date" name="date" type="date" class="form-control" placeholder="Date de la perte">
                                 </div>
                                 <div class="form-group">
                                         <label for="textarea">Description : </label>
-                                        <textarea id="textarea" type="textarea" class="form-control"></textarea>
+                                        <textarea id="textarea" name="description" type="textarea" class="form-control"></textarea>
                                 </div>
                                 <fieldset class="form-group">
                                         <div class="row">
                                                 <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
                                                 <div class="col-sm-10">
                                                         <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                                                <input class="form-check-input" type="radio" name="peluche" id="gridRadios1" value="option1" checked>
                                                                 <label class="form-check-label" for="gridRadios1">
                                                                         Peluche
                                                                 </label>
                                                         </div>
                                                         <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                                                <input class="form-check-input" type="radio" name="chiffe" id="gridRadios2" value="option2">
                                                                 <label class="form-check-label" for="gridRadios2">
                                                                         Chiffe
                                                                 </label>
                                                         </div>
                                                         <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                                                                <input class="form-check-input" type="radio" name="poupee" id="gridRadios3" value="option3">
                                                                 <label class="form-check-label" for="gridRadios3">
                                                                         Poupée
                                                                 </label>
                                                         </div>
                                                         <div class="form-check disabled">
-                                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                                                                <input class="form-check-input" type="radio" name="non-defini" id="gridRadios3" value="option3">
                                                                 <label class="form-check-label" for="gridRadios3">
                                                                         Non-défini
                                                                 </label>
@@ -108,10 +109,10 @@
                                 </fieldset>
                         </form>
                 </div>
-                 <!------------------------------------------FORMULAIRE DE TROUVAILLE------------------------------------------- -->
-                 <div id="form_find">
+                <!------------------------------------------FORMULAIRE DE TROUVAILLE------------------------------------------- -->
+                <div id="form_find">
                         <form class="col-lg-6" id="find_doudou" action="" method="post">
-                                <h3>Déposer un Doudou</h3>
+                                <h3>Déclarer un Doudou</h3>
                                 <div class="form-group">
 
                                         <input id="couleur" name="color" type="text" class="form-control" placeholder="Couleur du doudou">
@@ -159,21 +160,29 @@
                                         <button id="push_btn" class="btn btn-dark">Envoyer</button>
                                         <button type="back_button" class="btn btn-dark">Retour</button>
                                 </div>
-                                
+
                         </form>
                 </div>
                 <!------------------------------------------AFFICHAGE DETAILS DOUDOU---------------------------------------------->
-                <div id="details_doudou"> 
-                                <h3>DETAILS DU DOUDOU</h3>
+                <div id="details_doudou">
+                      <div id="titre_details"> <h3>DETAILS DU DOUDOU</h3></div>
                         <div id="pic_doudou"></div>
-                        <div id="map"></div>                      
+                        <div id="map"></div>
+                        <div id="txt_details">
+                                <div class="alert alert-success" role="alert">
+                                        Détails
+                                      </div>
+                        </div>
+                        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw&callback=initMap">
+                        </script>
+
                 </div>
-                
+
                 <!-------------------------------------------Fin Container------------------------------------------------>
 
         </div>
-        
-<!--------------------------------------------------------APPELS DES SCRIPTS JS-------------------------------------------------->
+
+        <!--------------------------------------------------------APPELS DES SCRIPTS JS-------------------------------------------------->
         <script src="js/jquery.js"></script>
         <script src="js/app.js"></script>
 </body>

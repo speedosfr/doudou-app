@@ -2,7 +2,7 @@ show_all();
 //----------------Bouton Rechercher--------------------------
 $("#search_btn").click(function () {
     $("main").hide();
-    $("#form_search").show();
+    $("#form_search").fadeIn( "slow" );
     $('#details_doudou').hide();
     $("#form_find").hide();
     $("#id_form").hide();
@@ -10,19 +10,19 @@ $("#search_btn").click(function () {
 });
 $("#send_btn").click(function () {
     $("main").show();
-    $("#form_search").hide();
+    $("#form_search").fadeIn( "slow" );
 //----------------Bouton envoi formulaire Trouver------------
 });
 $("#push_btn").click(function (e) {
     e.preventDefault();
     find_doudou();
-    $("main").show();
+    $("main").fadeIn( "slow" );
     $("#form_find").hide();
 });
 //----------------Bouton Trouver-----------------------------
 $("#find_btn").click(function () {
     $("main").hide();
-    $("#form_find").show();
+    $("#form_find").fadeIn( "slow" );
     $('#details_doudou').hide();
     $("#form_search").hide();
     $("#id_form").hide();
@@ -31,7 +31,7 @@ $("#find_btn").click(function () {
 //----------------Bouton Détenteur-----------------------------
 $("#id_btn").click(function () {
     $("main").hide();
-    $("#id_form").show();
+    $("#id_form").fadeIn( "slow" );
     $('#details_doudou').hide();
     $("#form_search").hide();
     $("#form_find").hide();
@@ -39,8 +39,8 @@ $("#id_btn").click(function () {
 })
 //----------------Bouton retour formulaire Chercher/Trouver----
 $("#back_button").click(function () {
-    $("main").hide();
-    $("#form_find").show();
+    $("main").fadeIn( "slow" );
+    $("#form_find").hide();
 })
 
 
@@ -74,7 +74,7 @@ function show_all() {
 
                 $("main").hide();
                 $("#titre").hide();
-                $('#details_doudou').show();
+                $('#details_doudou').fadeIn( "slow" );
                 searchDetails(id, response.data)
 
                 console.log("test" + id)
@@ -107,7 +107,7 @@ function searchDetails(id, data) {
             var lng = data[i].lng
 
             $("#pic_doudou").append(pic);
-            $("#details_doudou").append(
+            $("#txt_details").append(
 
                 `<div id ="show_details">
                              <p> Couleur : ${color} </p>
@@ -120,6 +120,7 @@ function searchDetails(id, data) {
         }
 
     }
+    initMap(lat, lng)
 }
 
 function find_doudou() {
@@ -129,3 +130,16 @@ function find_doudou() {
         data: $("#find_doudou").serialize(),
     })
 }
+function initMap(latitude, longitude) {
+    var uluru = {lat: latitude, lng: longitude};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: uluru
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    }); 
+    
+  }
+  

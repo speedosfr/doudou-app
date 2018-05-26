@@ -5,6 +5,7 @@ body {
     background: url(../img/bg.jpg) no-repeat ; 
      
 }
+
 #form_search, #form_find ,#id_form {
     display: none;
     width : 550px;
@@ -17,21 +18,31 @@ body {
 }
 #details_doudou{
     display: none;
-    width: 350px;
+    width: 500px;
     height: auto;
+    padding: 10px;
     margin-top : 2%;
-    margin-left: 18%;
-    padding : 20px;
     border : 1px solid black;
     background-color:rgba(255, 255, 255, 0.466);
     border-radius: 5%;
 }
-#pic_doudou {
-    width: 160px;
+#titre_details {
+    margin-left: 110px;
+}
+#txt_details {
+   font-size: 1em;
+}
+#pic_doudou {    
+    width: 10px;
     height: auto;
-    margin-left: 17%;
+    margin-left: 140px;     
 }
 
+#map {         
+    height: 400px;
+    width: 480px;
+    border : 1px solid black;   
+   }
 footer {
     text-align: center;
 }
