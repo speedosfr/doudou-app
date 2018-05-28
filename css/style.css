@@ -5,7 +5,9 @@ body {
     background: url(../img/bg.jpg) no-repeat ; 
      
 }
-
+#grp_btn {
+    margin-left: 25%;
+}
 #form_search, #form_find ,#id_form {
     display: none;
     width : 550px;
@@ -22,20 +24,26 @@ body {
     height: auto;
     padding: 10px;
     margin-top : 2%;
-    border : 1px solid black;
+    border : 1px solid rgb(233, 237, 240);
     background-color:rgba(255, 255, 255, 0.466);
     border-radius: 5%;
+    box-shadow: 1px 1px 12px #555;
 }
 #titre_details {
     margin-left: 110px;
 }
 #txt_details {
    font-size: 1em;
+   margin: 10px 10px;
+   padding: 10px;
+   border : 1px solid black;
+    background-color:rgba(255, 255, 255, 0.466);
 }
 #pic_doudou {    
     width: 10px;
     height: auto;
-    margin-left: 140px;     
+    margin-left: 140px;   
+    margin-bottom: 10px;  
 }
 
 #map {         

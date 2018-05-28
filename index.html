@@ -15,9 +15,9 @@
 <body>
         <div class="container">
             
-                <div class="btn-group row justify-center" role="group" aria-label="Basic example">
+                <div id="grp_btn" class="btn-group row justify-center" role="group" aria-label="Basic example">
                         <button id="search_btn" type="button" class="btn btn-secondary">Chercher</button>
-                        <button id="id_btn" type="button" class="btn btn-secondary">Detenteur</button>
+                        <button id="id_btn" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Detenteur</button>
                         <button id="find_btn" type="button" class="btn btn-secondary">Trouver</button>
                       </div>
 
@@ -169,7 +169,7 @@
                         <div id="pic_doudou"></div>
                         <div id="map"></div>
                         <div id="txt_details">
-                                <div class="alert alert-success" role="alert">
+                                <div class="alert alert-primary" role="alert">
                                         Détails
                                       </div>
                         </div>
