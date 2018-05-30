@@ -51,6 +51,9 @@ body {
     width: 480px;
     border : 1px solid black;   
    }
+#back_btndetails {
+    margin-left: 40%;
+}
 footer {
     text-align: center;
 }

@@ -42,7 +42,12 @@ $("#back_button").click(function () {
     $("main").fadeIn( "slow" );
     $("#form_find").hide();
 })
-
+$("#back_btndetails").click(function () {
+    $('#details_doudou').fadeOut("slow");
+    $("main").fadeIn("slow");
+    $("#titre").fadeIn("slow");
+  
+})
 
 function show_all() {
 
@@ -75,9 +80,7 @@ function show_all() {
                 $("main").hide();
                 $("#titre").hide();
                 $('#details_doudou').fadeIn( "slow" );
-                searchDetails(id, response.data)
-
-                console.log("test" + id)
+                searchDetails(id, response.data);                
             });
 
         })
@@ -85,13 +88,11 @@ function show_all() {
 
 function searchDetails(id, data) {
 
+    $('#txt_details').empty();
     for (var i = 0; i < data.length; i++) {
 
         if (id == data[i].id) {
-
-            console.log(data);
-            console.log("id " + data[i].id);
-
+           
             $("#pic_doudou").empty();
             var pic = $("<img>").attr("src", "http://localhost:8082/Doudou/doudou-sf/public/img/photos/" + data[i].image)
             pic.css("width", 200)
@@ -120,7 +121,7 @@ function searchDetails(id, data) {
         }
 
     }
-    initMap(lat, lng)
+    initMap(lat, lng);    
 }
 
 function find_doudou() {
@@ -140,6 +141,6 @@ function initMap(latitude, longitude) {
       position: uluru,
       map: map
     }); 
-    
+   
   }
   
