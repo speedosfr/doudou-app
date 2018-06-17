@@ -41,15 +41,22 @@ $("#push_btn").click(function (e) {
     $("main").fadeIn( "slow" );
     $("#form_find").hide();
 });
+//----------------Envoi formulaire Détenteur------------
+$("#create_detenteur").click(function (e) {
+    e.preventDefault();
+    create_detenteur();
+    $("main").fadeIn( "slow" );
+    $("#form_detenteur").hide();
+});
 //----------------Bouton Trouver-----------------------------
 $("#find_btn").click(function () {
+    selectDetenteur();
     $("main").hide();
     $("#form_find").fadeIn( "slow" );
     $('#details_doudou').hide();
     $('#doudou').hide();
     $("#form_search").hide();
     $("#form_detenteur").hide();
-   
 })
 //----------------Bouton Détenteur-----------------------------
 $("#id_btn").click(function () {
@@ -163,7 +170,7 @@ function searchDetails(id, data) {
         }
 
     }
-    initMap();    
+    initMap(lat, lng);    
 }
 //--------------------Afficher détails du doudou----------------------------
 function find_doudou() {
@@ -172,10 +179,19 @@ function find_doudou() {
         method: "POST",
         data: $("#find_doudou").serialize(),
     })
+    console.log($("#find_doudou").serialize());
 }
-
+//-------------------------Créer un détenteur-------------------------------
+function create_detenteur(){
+    $.ajax({
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/detenteur/",
+        method: "POST",
+        data: $("#ajout_detenteur_form").serialize(),
+    })
+}
+//----------------------------Afficher carte--------------------------------
 function initMap(latitude, longitude) {
-    var uluru = {lat: latitude, lng: longitude};
+    var uluru = {lat: (parseFloat(latitude)), lng: (parseFloat(longitude))};
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
       center: uluru
@@ -186,4 +202,24 @@ function initMap(latitude, longitude) {
     }); 
    
   }
+//------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
+function selectDetenteur(){
+    $.ajax({
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/detenteurs",
+        method: "GET",
+        dataType: 'json'
+    })
+    .done(function (response) {
+
+        $("#detenteur").empty();
+
+        response.data.forEach(function (detenteur) {
+            var prenom = detenteur.prenom
+            var nom = detenteur.nom
+            var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
+
+            $("#detenteur").append(option)
+        })
+    })
+}
   

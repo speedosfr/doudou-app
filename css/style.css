@@ -280,7 +280,7 @@ span.error{
 
 .image, #pic_doudou{
     display: inline-block;
-    max-width: 220px;
+    width: 220px;
     height: 320px;
     background: white;
     line-height: 100px;
