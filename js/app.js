@@ -22,6 +22,7 @@ $(window).scroll(function () {//Au scroll dans la fenetre on déclenche la fonct
 
 //----------------Bouton Rechercher--------------------------
 $("#search_btn").click(function () {
+    selectType();
     $("main").hide();
     $("#form_search").fadeIn( "slow" );
     $('#details_doudou').hide();
@@ -51,6 +52,7 @@ $("#create_detenteur").click(function (e) {
 //----------------Bouton Trouver-----------------------------
 $("#find_btn").click(function () {
     selectDetenteur();
+    selectType2();
     $("main").hide();
     $("#form_find").fadeIn( "slow" );
     $('#details_doudou').hide();
@@ -172,7 +174,7 @@ function searchDetails(id, data) {
     }
     initMap(lat, lng);    
 }
-//--------------------Afficher détails du doudou----------------------------
+//--------------------créer un doudou----------------------------
 function find_doudou() {
     $.ajax({
         url: "http://localhost:/doudou/doudou-sf/public/api/v1/doudou/",
@@ -219,6 +221,52 @@ function selectDetenteur(){
             var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
 
             $("#detenteur").append(option)
+        })
+    })
+}
+
+//------------------------Création des choix des types form recherche -------------------------------
+function selectType(){
+    $.ajax({
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/types",
+        method: "GET",
+        dataType: 'json'
+    })
+    .done(function (response) {
+
+        $("#options_type").empty();
+
+        response.data.forEach(function (type) {
+            var label = type.label
+            var option = $(`<div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" id="${type.id}" value="${type.id}" checked>
+                                <label class="form-check-label" for="${type.id}">${type.label}</label>
+                            </div>`)
+
+            $("#options_type").append(option)
+        })
+    })
+}
+
+//------------------------Création des choix des types form trouver -------------------------------
+function selectType2(){
+    $.ajax({
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/types",
+        method: "GET",
+        dataType: 'json'
+    })
+    .done(function (response) {
+
+        $("#options_type2").empty();
+
+        response.data.forEach(function (type) {
+            var label = type.label
+            var option = $(`<div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" id="${type.id}b" value="${type.id}" checked>
+                                <label class="form-check-label" for="${type.id}b">${type.label}</label>
+                            </div>`)
+
+            $("#options_type2").append(option)
         })
     })
 }
