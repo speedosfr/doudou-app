@@ -176,12 +176,31 @@ function searchDetails(id, data) {
 }
 //--------------------créer un doudou----------------------------
 function find_doudou() {
+    var file_data = $("#photo").prop("files")[0]; 
+    var couleur = $("#color"); 
+    var lieu = $("#lieu");
+    var type = $("#type");
+    var detenteur = $("#detenteur");
+    var form_data = new FormData($('#find_doudou').get(0));
+    form_data.append("file", file_data);
+    form_data.append("text", couleur);
+    form_data.append("text", lieu);
+    form_data.append("text", type);
+    form_data.append("text", detenteur);
     $.ajax({
         url: "http://localhost:/doudou/doudou-sf/public/api/v1/doudou/",
-        method: "POST",
-        data: $("#find_doudou").serialize(),
+        dataType: 'json',  // what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        success: function(php_script_response){
+            alert(php_script_response); // display response from the PHP script, if any
+        }
     })
     console.log($("#find_doudou").serialize());
+    console.log(file_data);
 }
 //-------------------------Créer un détenteur-------------------------------
 function create_detenteur(){
@@ -270,4 +289,3 @@ function selectType2(){
         })
     })
 }
-  
