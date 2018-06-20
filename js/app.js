@@ -284,13 +284,22 @@ function initMap(latitude, longitude) {
 //------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
 function selectDetenteur(){
     $.ajax({
-        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/detenteurs",
         method: "GET",
         dataType: 'json'
     })
     .done(function (response) {
+        $("#detenteur").empty();
 
+        response.data.forEach(function (detenteur) {
+            var prenom = detenteur.prenom
+            var nom = detenteur.nom
+            var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
 
+            $("#detenteur").append(option)
+        })
+    })
+}
 //------------------------Création des choix des types form recherche -------------------------------
 function selectType(){
     $.ajax({
@@ -324,49 +333,49 @@ function selectType2(){
     .done(function (response) {
 
         $("#options_type2").empty();
-        $("#detenteur").empty();
+        response.data.forEach(function (type) {
+            var label = type.label
+            var option = $(`<div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" id="${type.id}b" value="${type.id}" checked>
+                                <label class="form-check-label" for="${type.id}b">${type.label}</label>
+                            </div>`)
 
-        response.data.forEach(function (detenteur) {
-            var prenom = detenteur.prenom
-            var nom = detenteur.nom
-            var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
-
-            $("#detenteur").append(option)
+            $("#options_type2").append(option)
         })
     })
 }
 //------------------------Geolocalisation-------------------------------
 
-    function maPosition(position) {
-        $("#coords").empty();        
-        
-        longiT = position.coords.longitude;
-        latiT   = position.coords.latitude; 
-        var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", longiT);
-        var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
-        $("#coords").append(putLongiT);
-        $("#coords").append(putLatiT); 
-        console.log(longiT+" "+latiT)
-        if(longiT !=0 && latiT !=0) {
-            setTimeout(function()  {
-        document.getElementById("geo_ok").style.display = "block";
-        }, 1500);            
-        }else{
-            $("#geo_notOk").fadeIn( "slow" )            
-        }      
-      }   
+function maPosition(position) {
+    $("#coords").empty();        
+    
+    longiT = position.coords.longitude;
+    latiT   = position.coords.latitude; 
+    var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", longiT);
+    var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
+    $("#coords").append(putLongiT);
+    $("#coords").append(putLatiT); 
+    console.log(longiT+" "+latiT)
+    if(longiT !=0 && latiT !=0) {
+        setTimeout(function()  {
+    document.getElementById("geo_ok").style.display = "block";
+    }, 1500);            
+    }else{
+        $("#geo_notOk").fadeIn( "slow" )            
+    }      
+  }   
 
-    function adresseToGps() {
-        var adresse = document.getElementById("lieu").value;
-        console.log(adresse)
-        $.ajax({
-            url : "https://maps.googleapis.com/maps/api/geocode/json?address="+adresse+"&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
-            
-            method : "GET",
-            dataType: 'json'        
-        })
-        .done(function (response) {
-            
+function adresseToGps() {
+    var adresse = document.getElementById("lieu").value;
+    console.log(adresse)
+    $.ajax({
+        url : "https://maps.googleapis.com/maps/api/geocode/json?address="+adresse+"&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
+        
+        method : "GET",
+        dataType: 'json'        
+    })
+    .done(function (response) {
+        
         console.log(response.results[0].geometry.location.lat)
         console.log(response.results[0].geometry.location.lng)    
         
@@ -379,30 +388,17 @@ function selectType2(){
         console.log(longiT+" "+latiT)
 
 
-        response.data.forEach(function (type) {
-            var label = type.label
-            var option = $(`<div class="form-check">
-                                <input class="form-check-input" type="radio" name="type" id="${type.id}b" value="${type.id}" checked>
-                                <label class="form-check-label" for="${type.id}b">${type.label}</label>
-                            </div>`)
-
-
-            $("#options_type2").append(option)
-        })
     })
 }
-
-    })
-    }
-    function eraseCoords() {
-        $("#coords").empty();
-        var latiT = 0;
-        var longiT = 0;
-        var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", longiT);
-        var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
-        $("#coords").append(putLongiT);
-        $("#coords").append(putLatiT); 
-    }
+function eraseCoords() {
+    $("#coords").empty();
+    var latiT = 0;
+    var longiT = 0;
+    var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", longiT);
+    var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
+    $("#coords").append(putLongiT);
+    $("#coords").append(putLatiT); 
+}
   
 
 
