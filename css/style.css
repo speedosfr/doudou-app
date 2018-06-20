@@ -2,22 +2,28 @@ body {
    
     margin:0;
     padding:0;
-    background: url(../img/bg.jpg) no-repeat ; 
+    /*background-color: #4797ED !important;*/
+    background: url(../img/bg.jpg) no-repeat fixed;
+    background-size: cover; 
      
 }
-#grp_btn {
-    margin-left: 25%;
-}
-#form_search, #form_find ,#id_form {
+
+#form_search, #form_find ,#form_detenteur, #doudou{
     display: none;
-    width : 550px;
-    height: auto;
+    max-width: 590px;
+    margin: 0 auto;
     padding: 10px;
-    margin-top: 2%;
-    border : 1px solid black;
-    background-color:rgba(255, 255, 255, 0.466);
-    border-radius: 5%;
+    background-color: rgba(255, 255, 255, 0.466);
 }
+
+#form_search, #form_find ,#form_detenteur, #content, #doudou{
+    margin: 20px auto 70px;
+}
+
+.marge-sup{
+    margin-top: 60px !important;
+}
+
 #details_doudou{
     display: none;
     
@@ -25,27 +31,42 @@ body {
 #titre_details {
     margin-left: 110px;
 }
-#txt_details {
-   font-size: 1em;
-   margin: 10px 10px;
-   padding: 10px;
-   border : 1px solid black;
+#details{
+    margin: 10px 0;
+    padding: 10px;
+    border : 1px solid white;
     background-color:rgba(255, 255, 255, 0.466);
+    text-align: left;
 }
-#navigation {
-   
+#details h5{
+    margin-bottom: 1em;
 }
-#pic_doudou {    
+#details i{
+    display: block;
+    text-align: center;
+    font-size: 30px;
+}
+
+#txt_details {
+    font-size: 1em;
+}
+
+.small{
+    text-align: center;
+    margin-bottom: 0;
+}
+
+/*#pic_doudou {    
     width: 10px;
     height: auto;
     margin: 25%; 
-}
+}*/
 
 #map {         
     height: 400px;
-    width: 420px;
+    width: 100%;
     margin: auto;
-    border : 1px solid black;   
+    border : 1px solid white;   
    }
 #back_btndetails {
     margin-left: 40%;
@@ -69,7 +90,6 @@ h1{
     border-radius:10px;
     border:2px solid #fff;
     background-color:#f9f9f9;
-    width:450px;
     margin-top: 100px;
     overflow:hidden;
 }
@@ -252,4 +272,141 @@ span.error{
     background:#d8d8d8;
     color:#666;
     text-shadow:1px 1px 1px #fff;
+}
+
+#content{
+    cursor: pointer;
+}
+
+.image, #pic_doudou{
+    display: inline-block;
+    width: 220px;
+    height: 320px;
+    background: white;
+    line-height: 100px;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgb(160, 160, 160);
+    overflow: hidden;
+    margin: 5px;
+    position: relative;
+}
+
+.image img, #pic_doudou img{
+    margin: 0 -50%;
+    min-width: 100%;
+    height: 320px;
+}
+
+.image i{
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    margin-left: -50px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 100px;
+}
+
+.container{
+    text-align: center;
+}
+
+.fixtitle{
+    z-index: 9999;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: -50%;
+    margin-left: 50%;
+    background-color: rgba(68, 68, 68, 0.8);
+    -webkit-transition: background-color .2s ease-out;
+    -moz-transition: background-color .2s ease-out;
+    -o-transition: background-color .2s ease-out;
+    transition: background-color .2s ease-out;
+}
+
+.fixtitle div{
+    background-color: rgba(51, 51, 51, 0);
+    -webkit-transition: background-color .2s ease-out;
+    -moz-transition: background-color .2s ease-out;
+    -o-transition: background-color .2s ease-out;
+    transition: background-color .2s ease-out;
+}
+
+.nofixtitle{
+    margin: 0 -15px;
+    background-color: rgba(68, 68, 68, 0);
+    -webkit-transition: background-color .2s ease-out;
+    -moz-transition: background-color .2s ease-out;
+    -o-transition: background-color .2s ease-out;
+    transition: background-color .2s ease-out;
+}
+
+.nofixtitle div{
+    background-color: #333;
+    -webkit-transition: background-color .2s ease-out;
+    -moz-transition: background-color .2s ease-out;
+    -o-transition: background-color .2s ease-out;
+    transition: background-color .2s ease-out; 
+}
+
+#group div{
+    color: #fff;
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.form-group{
+    text-align: left;
+}
+
+footer{
+    height: 20px;
+    background-color: #16375a;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+footer p{
+    color: #fff;
+    font-size: 12px;
+}
+
+i{
+    font-size: 15px;
+    min-width: 30px;
+}
+
+#group div span{
+    display: block;
+}
+
+.nofixtitle div span{
+    font-size: 12px;
+    opacity: 100%;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    transition: .2s ease-out; 
+}
+.fixtitle div span{
+    font-size: 0;
+    opacity: 0;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    transition: .2s ease-out; 
+}
+#coords {
+    display: none;
+}
+#geo_ok{
+    display:none;
+}
+#geo_notOk {
+    display: none;
 }
