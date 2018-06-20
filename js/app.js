@@ -22,6 +22,7 @@ $(window).scroll(function () {//Au scroll dans la fenetre on déclenche la fonct
 
 //----------------Bouton Rechercher--------------------------
 $("#search_btn").click(function () {
+    selectType();
     $("main").hide();
     $("#form_search").fadeIn( "slow" );
     $('#details_doudou').hide();
@@ -51,6 +52,7 @@ $("#create_detenteur").click(function (e) {
 //----------------Bouton Trouver-----------------------------
 $("#find_btn").click(function () {
     selectDetenteur();
+    selectType2();
     $("main").hide();
     $("#form_find").fadeIn( "slow" );
     $('#details_doudou').hide();
@@ -77,7 +79,7 @@ $("back_button").click(function () {
     $("#form_search").hide();
     $("#form_find").hide();
 })
-//------------Bouton Retour Accueil------------------------------------
+//------------H1 Retour Accueil------------------------------------
 var retour = document.getElementById('return');
 retour.onclick = function() {
     $("main").fadeIn( "slow" );
@@ -107,11 +109,12 @@ var btn_chk = document.getElementById('chkGeo_no');
         console.log("je suis la")
      adresseToGps();   
     }
+
 //------------Afficher les derniers doudous entrés----------------
 function show_all() {
 
     $.ajax({
-            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudous/random",
+            url: "http://localhost:/doudou/doudou-sf/public/api/v1/doudous/random",
             method: "GET",
             data: {
                 num: 6
@@ -125,7 +128,7 @@ function show_all() {
             response.data.forEach(function (doudou) {
                 var a = $("<a>")
                 var div = $("<div>").attr("class", "image")
-                var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + doudou.image)
+                var pic = $("<img>").attr("src", "http://localhost:/doudou/doudou-sf/public/img/photos/" + doudou.image)
                 var zoom =$("<i class=\"fas fa-search-plus\"></i>")
                 a.attr("data.id", doudou.id)
 
@@ -154,7 +157,8 @@ function searchDetails(id, data) {
         if (id == data[i].id) {
            
             $("#pic_doudou").empty();
-            var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + data[i].image)
+            var pic = $("<img>").attr("src", "http://localhost:/doudou/doudou-sf/public/img/photos/" + data[i].image)
+
             /*pic.css("width", 200)
             pic.css("height", 300)
             pic.css("border", "2px solid white")
@@ -163,7 +167,7 @@ function searchDetails(id, data) {
             var color = data[i].color
             var date = data[i].dateFind
             var place = data[i].placeFind
-            var type = data[i].type
+            var type = data[i].type.label
             var lat = data[i].lat
             var lng = data[i].lng
 
@@ -192,22 +196,77 @@ function searchDetails(id, data) {
     }
     initMap(lat, lng);    
 }
-//--------------------Afficher détails du doudou----------------------------
+
+//--------------------créer un doudou----------------------------
 function find_doudou() {
+    var file_data = $("#photo").prop("files")[0]; 
+    var couleur = $("#color"); 
+    var lieu = $("#lieu");
+    var type = $("#options_type2");
+    var detenteur = $("#detenteur");
+    var form_data = new FormData($('#find_doudou').get(0));
+    form_data.append("file", file_data);
+    form_data.append("text", couleur);
+    form_data.append("text", lieu);
+    form_data.append("text", type);
+    form_data.append("text", detenteur);
     $.ajax({
-        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudou/",
-        method: "POST",
-        data: $("#find_doudou").serialize(),
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/doudou/",
+        dataType: 'json',  // what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        success: function(php_script_response){
+            alert(php_script_response); // display response from the PHP script, if any
+        }
     })
     console.log($("#find_doudou").serialize());
+    console.log(file_data);
+
 }
 //-------------------------Créer un détenteur-------------------------------
 function create_detenteur(){
     $.ajax({
-        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteur/",
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/detenteur/",
         method: "POST",
         data: $("#ajout_detenteur_form").serialize(),
     })
+}
+//----------------------------Afficher carte--------------------------------
+function initMap(latitude, longitude) {
+    var uluru = {lat: (parseFloat(latitude)), lng: (parseFloat(longitude))};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: uluru
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    }); 
+   
+  }
+//------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
+function selectDetenteur(){
+    $.ajax({
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/detenteurs",
+        method: "GET",
+        dataType: 'json'
+    })
+    .done(function (response) {
+
+        $("#detenteur").empty();
+
+        response.data.forEach(function (detenteur) {
+            var prenom = detenteur.prenom
+            var nom = detenteur.nom
+            var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
+
+            $("#detenteur").append(option)
+        })
+    })
+
 }
 //----------------------------Afficher carte--------------------------------
 function initMap(latitude, longitude) {
@@ -231,6 +290,40 @@ function selectDetenteur(){
     })
     .done(function (response) {
 
+
+//------------------------Création des choix des types form recherche -------------------------------
+function selectType(){
+    $.ajax({
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/types",
+        method: "GET",
+        dataType: 'json'
+    })
+    .done(function (response) {
+
+        $("#options_type").empty();
+
+        response.data.forEach(function (type) {
+            var label = type.label
+            var option = $(`<div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" id="${type.id}" value="${type.id}" checked>
+                                <label class="form-check-label" for="${type.id}">${type.label}</label>
+                            </div>`)
+
+            $("#options_type").append(option)
+        })
+    })
+}
+
+//------------------------Création des choix des types form trouver -------------------------------
+function selectType2(){
+    $.ajax({
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/types",
+        method: "GET",
+        dataType: 'json'
+    })
+    .done(function (response) {
+
+        $("#options_type2").empty();
         $("#detenteur").empty();
 
         response.data.forEach(function (detenteur) {
@@ -286,6 +379,19 @@ function selectDetenteur(){
         console.log(longiT+" "+latiT)
 
 
+        response.data.forEach(function (type) {
+            var label = type.label
+            var option = $(`<div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" id="${type.id}b" value="${type.id}" checked>
+                                <label class="form-check-label" for="${type.id}b">${type.label}</label>
+                            </div>`)
+
+
+            $("#options_type2").append(option)
+        })
+    })
+}
+
     })
     }
     function eraseCoords() {
@@ -299,4 +405,4 @@ function selectDetenteur(){
     }
   
 
-    
+
