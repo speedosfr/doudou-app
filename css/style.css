@@ -411,4 +411,7 @@ i{
 #geo_notOk {
     display: none;
 }
+#display_adr {
+    width: 100% !important;
+}
 
