@@ -145,7 +145,7 @@ function searchDetails(id, data) {
             var color = data[i].color
             var date = data[i].dateFind
             var place = data[i].placeFind
-            var type = data[i].type
+            var type = data[i].type.label
             var lat = data[i].lat
             var lng = data[i].lng
 
@@ -179,7 +179,7 @@ function find_doudou() {
     var file_data = $("#photo").prop("files")[0]; 
     var couleur = $("#color"); 
     var lieu = $("#lieu");
-    var type = $("#type");
+    var type = $("#options_type2");
     var detenteur = $("#detenteur");
     var form_data = new FormData($('#find_doudou').get(0));
     form_data.append("file", file_data);
