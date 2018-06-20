@@ -89,6 +89,27 @@ retour.onclick = function() {
     $("#form_search").hide();
     $("#form_find").hide();
 };
+//----------------Bouton Geolocalisation---------------------------------
+var btn_chk = document.getElementById('chkGeo_ok');
+btn_chk.onclick = function() {
+    navigator.geolocation.getCurrentPosition(maPosition);
+    $("#lieu").css("display","none");
+    $("#mess_geo").css("display","block");
+    }
+var btn_chk = document.getElementById('chkGeo_no');
+    btn_chk.onclick = function() {
+    $("#mess_geo").css("display","none");   
+    $("#lieu").css("display","block");
+    //eraseCoords();
+    //reverseCoords();
+    //console.log(longiT+" "+latiT)
+    }
+    var btn_chk = document.getElementById('detenteur');
+    btn_chk.onclick = function() {
+        console.log("je suis la")
+     adresseToGps();   
+    }
+
 //------------Afficher les derniers doudous entrés----------------
 function show_all() {
 
@@ -137,6 +158,7 @@ function searchDetails(id, data) {
            
             $("#pic_doudou").empty();
             var pic = $("<img>").attr("src", "http://localhost:/doudou/doudou-sf/public/img/photos/" + data[i].image)
+
             /*pic.css("width", 200)
             pic.css("height", 300)
             pic.css("border", "2px solid white")
@@ -174,6 +196,7 @@ function searchDetails(id, data) {
     }
     initMap(lat, lng);    
 }
+
 //--------------------créer un doudou----------------------------
 function find_doudou() {
     var file_data = $("#photo").prop("files")[0]; 
@@ -201,6 +224,7 @@ function find_doudou() {
     })
     console.log($("#find_doudou").serialize());
     console.log(file_data);
+
 }
 //-------------------------Créer un détenteur-------------------------------
 function create_detenteur(){
@@ -242,7 +266,30 @@ function selectDetenteur(){
             $("#detenteur").append(option)
         })
     })
+
 }
+//----------------------------Afficher carte--------------------------------
+function initMap(latitude, longitude) {
+    var uluru = {lat: (parseFloat(latitude)), lng: (parseFloat(longitude))};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: uluru
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    }); 
+   
+  }
+//------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
+function selectDetenteur(){
+    $.ajax({
+        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
+        method: "GET",
+        dataType: 'json'
+    })
+    .done(function (response) {
+
 
 //------------------------Création des choix des types form recherche -------------------------------
 function selectType(){
@@ -277,6 +324,60 @@ function selectType2(){
     .done(function (response) {
 
         $("#options_type2").empty();
+        $("#detenteur").empty();
+
+        response.data.forEach(function (detenteur) {
+            var prenom = detenteur.prenom
+            var nom = detenteur.nom
+            var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
+
+            $("#detenteur").append(option)
+        })
+    })
+}
+//------------------------Geolocalisation-------------------------------
+
+    function maPosition(position) {
+        $("#coords").empty();        
+        
+        longiT = position.coords.longitude;
+        latiT   = position.coords.latitude; 
+        var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", longiT);
+        var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
+        $("#coords").append(putLongiT);
+        $("#coords").append(putLatiT); 
+        console.log(longiT+" "+latiT)
+        if(longiT !=0 && latiT !=0) {
+            setTimeout(function()  {
+        document.getElementById("geo_ok").style.display = "block";
+        }, 1500);            
+        }else{
+            $("#geo_notOk").fadeIn( "slow" )            
+        }      
+      }   
+
+    function adresseToGps() {
+        var adresse = document.getElementById("lieu").value;
+        console.log(adresse)
+        $.ajax({
+            url : "https://maps.googleapis.com/maps/api/geocode/json?address="+adresse+"&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
+            
+            method : "GET",
+            dataType: 'json'        
+        })
+        .done(function (response) {
+            
+        console.log(response.results[0].geometry.location.lat)
+        console.log(response.results[0].geometry.location.lng)    
+        
+        longiT = response.results[0].geometry.location.lng;
+        latiT   = response.results[0].geometry.location.lat; 
+        var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", longiT);
+        var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
+        $("#coords").append(putLongiT);
+        $("#coords").append(putLatiT); 
+        console.log(longiT+" "+latiT)
+
 
         response.data.forEach(function (type) {
             var label = type.label
@@ -285,7 +386,23 @@ function selectType2(){
                                 <label class="form-check-label" for="${type.id}b">${type.label}</label>
                             </div>`)
 
+
             $("#options_type2").append(option)
         })
     })
 }
+
+    })
+    }
+    function eraseCoords() {
+        $("#coords").empty();
+        var latiT = 0;
+        var longiT = 0;
+        var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", longiT);
+        var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
+        $("#coords").append(putLongiT);
+        $("#coords").append(putLatiT); 
+    }
+  
+
+

@@ -401,3 +401,14 @@ i{
     -o-transition: .2s ease-out;
     transition: .2s ease-out; 
 }
+
+#coords {
+    display: none;
+}
+#geo_ok{
+    display:none;
+}
+#geo_notOk {
+    display: none;
+}
+
