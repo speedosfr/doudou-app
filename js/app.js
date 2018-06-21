@@ -22,6 +22,7 @@ $(window).scroll(function () {//Au scroll dans la fenetre on déclenche la fonct
 
 //----------------Bouton Rechercher--------------------------
 $("#search_btn").click(function () {
+    $("#recherche_doudou")[0].reset();
     selectType();
     $("main").hide();
     $("#form_search").fadeIn( "slow" );
@@ -51,6 +52,7 @@ $("#create_detenteur").click(function (e) {
 });
 //----------------Bouton Trouver-----------------------------
 $("#find_btn").click(function () {
+    $("#find_doudou")[0].reset();
     selectDetenteur();
     selectType2();
     $("main").hide();
@@ -62,6 +64,19 @@ $("#find_btn").click(function () {
 })
 //----------------Bouton Détenteur-----------------------------
 $("#id_btn").click(function () {
+    $("#ajout_detenteur_form")[0].reset();
+    $("main").hide();
+    $("#form_detenteur").fadeIn( "slow" );
+    $('#details_doudou').hide();
+    $('#doudou').hide();
+    $("#form_search").hide();
+    $("#form_find").hide();
+   
+})
+//----------------Bouton first_find-----------------------------
+$("#first_find").click(function (e) {
+    e.preventDefault();
+    $("#ajout_detenteur_form")[0].reset();
     $("main").hide();
     $("#form_detenteur").fadeIn( "slow" );
     $('#details_doudou').hide();
@@ -72,6 +87,11 @@ $("#id_btn").click(function () {
 })
 //----------------Bouton retour---------------------------------
 $("back_button").click(function () {
+    $("#recherche_doudou")[0].reset();
+    $("#ajout_detenteur_form")[0].reset();
+    $("#find_doudou")[0].reset();
+    $("#content").empty();
+    show_all();
     $("main").fadeIn( "slow" );
     $("#form_detenteur").hide();
     $('#details_doudou').hide();
@@ -82,6 +102,8 @@ $("back_button").click(function () {
 //------------H1 Retour Accueil------------------------------------
 var retour = document.getElementById('return');
 retour.onclick = function() {
+    $("#content").empty();
+    show_all();
     $("main").fadeIn( "slow" );
     $("#form_detenteur").hide();
     $('#details_doudou').hide();
@@ -95,20 +117,26 @@ btn_chk.onclick = function() {
     navigator.geolocation.getCurrentPosition(maPosition);
     $("#lieu").css("display","none");
     $("#mess_geo").css("display","block");
-    }
+}
 var btn_chk = document.getElementById('chkGeo_no');
-    btn_chk.onclick = function() {
+btn_chk.onclick = function() {
     $("#mess_geo").css("display","none");   
     $("#lieu").css("display","block");
     //eraseCoords();
     //reverseCoords();
     //console.log(longiT+" "+latiT)
-    }
-    var btn_chk = document.getElementById('detenteur');
-    btn_chk.onclick = function() {
-        console.log("je suis la")
-     adresseToGps();   
-    }
+}
+
+$("#lieu").on("keyup", function(e){
+    console.log("je suis la")
+    adresseToGps(); 
+})
+
+/*var btn_chk = document.getElementById('detenteur');
+btn_chk.onclick = function() {
+    console.log("je suis la")
+    adresseToGps();   
+}*/
 
 //------------Afficher les derniers doudous entrés----------------
 function show_all() {
@@ -117,7 +145,7 @@ function show_all() {
             url: "http://localhost:/doudou/doudou-sf/public/api/v1/doudous/random",
             method: "GET",
             data: {
-                num: 6
+                num: 60
             },
             dataType: 'json'
         })
@@ -210,6 +238,7 @@ function find_doudou() {
     form_data.append("text", lieu);
     form_data.append("text", type);
     form_data.append("text", detenteur);
+    console.log(couleur.val());
     $.ajax({
         url: "http://localhost:/doudou/doudou-sf/public/api/v1/doudou/",
         dataType: 'json',  // what to expect back from the PHP script, if anything
@@ -234,19 +263,6 @@ function create_detenteur(){
         data: $("#ajout_detenteur_form").serialize(),
     })
 }
-//----------------------------Afficher carte--------------------------------
-function initMap(latitude, longitude) {
-    var uluru = {lat: (parseFloat(latitude)), lng: (parseFloat(longitude))};
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15,
-      center: uluru
-    });
-    var marker = new google.maps.Marker({
-      position: uluru,
-      map: map
-    }); 
-   
-  }
 //------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
 function selectDetenteur(){
     $.ajax({

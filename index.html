@@ -50,15 +50,12 @@
                         <form class="col-lg-12" id="ajout_detenteur_form" action="" method="post">
                                 <h3>Créer un Détenteur</h3>
                                 <div class="form-group">
-
-                                        <input id="newNom" name="lastName" type="text" class="form-control" placeholder="Votre nom">
-                                </div>
-                                <div class="form-group">
-
                                         <input id="newPrenom" name="firstName" type="text" class="form-control" placeholder="Votre prénom">
                                 </div>
                                 <div class="form-group">
-
+                                        <input id="newNom" name="lastName" type="text" class="form-control" placeholder="Votre nom">
+                                </div>
+                                <div class="form-group">
                                         <input id="newEmail" name="email" type="text" class="form-control" placeholder="Votre email">
                                 </div>
                                 <button type="submit" id="create_detenteur" class="btn btn-dark">Envoyer</button>
@@ -67,7 +64,7 @@
                 </div>
                 <!--/////////////////////////////////////////////////FORMULAIRE DE RECHERCHE/////////////////////////////////////////////////- -->
                 <div id="form_search">
-                        <form class="col-lg-12" name="ajout_doudou" action="" method="post">
+                        <form class="col-lg-12" name="ajout_doudou" id="recherche_doudou" action="" method="post">
                                 <h3>Chercher mon Doudou</h3>
                                 <div class="form-group">
 
@@ -92,7 +89,7 @@
                                 </div>
                                 <fieldset class="form-group">
                                         <div class="row">
-                                                <legend class="col-form-label col-sm-2 pt-0">Type</legend>
+                                                <h5>Choisissez un type</h5>
 
                                                 <div id="options_type" class="col-sm-10"></div>
 
@@ -110,19 +107,22 @@
 
                                 <h3>Déclarer un Doudou</h3>
                                 <div class="form-group">
-
-                                        <input id="couleur" name="color" type="text" class="form-control" placeholder="Couleur principale du doudou">
+                                        <h5>Identifiez-vous</h5>
+                                        <select id="detenteur" name="detenteur" class="form-control" type="select"></select>
+                                        <p></p>
+                                        <button id="first_find" class="btn btn-dark">C'est mon premier doudou.</button>     
+                                </div>
+                                <div class="form-group">
+                                        <h5>Indiquez une couleur</h5>
+                                        <input id="color" name="color" type="text" class="form-control" placeholder="Couleur principale du doudou">
                                 </div>
                                 <fieldset class="form-group">
-                                        <div class="row">
-                                                <legend class="col-form-label col-sm-2 pt-0">Type</legend>
-
-                                                <div id="options_type2" class="col-sm-10"></div>
-
-                                        </div>
+                                        <h5>Choisissez un type</h5>
+                                        <div id="options_type2" class="col-sm-10"></div>
                                 </fieldset>
                                 <div class="form-group">
-                                        <h6>Voulez vous etre géolocalisé ?</h6>
+                                        <h5>Où avez-vous trouvé le doudou</h5>
+                                        <h6>Voulez vous être géolocalisé ?</h6>
                                         <input type="radio" id="chkGeo_ok" name="chkGeo"  />
                                         <label for="chkGeo">Oui</label>
                                         <input type="radio" id="chkGeo_no" name="chkGeo"  checked />
@@ -138,27 +138,15 @@
                                         </div>
                                         <input id="lieu" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte" >
                                         <div id="coords"></div>
-
                                 </div>
-                                <!--<div class="form-group">
-
-                                        <input id="photo" name="photo" type="texte" class="form-control" placeholder="Photo du doudou trouvé">
-                                </div>-->
                                 <div class="form-group">
-                                        <select id="detenteur" name="detenteur" class="form-control" type="select"></select>
-                                </div>
-
-                                <div class="form-group">
-
+                                        <h5>Déposez une photo du doudou</h5>
                                         <input type="file" id="photo" name="photo">
                                 </div>
 
                                 <button id="push_btn" class="btn btn-dark">Envoyer</button>
                                 <button class="btn btn-dark back_button">Retour</button>
-
-
-                        </form>
-                        
+                        </form>                       
                 </div>
                 <!--/////////////////////////////////////AFFICHAGE DETAILS DOUDOU/////////////////////////////////////////////////////////-->
                 <div id="doudou">
