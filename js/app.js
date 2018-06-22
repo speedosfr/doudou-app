@@ -41,6 +41,17 @@ $("#push_btn").click(function (e) {
     find_doudou();
     $("main").fadeIn("slow");
     $("#form_find").hide();
+
+    $("#messageUtil").show();
+    $("#messageUtil").css({
+        'position':'absolute',
+        'top':'50px',
+        'text-align':'center',
+        'width':'100%'
+    }).fadeOut(3000,'swing').addClass("alert alert-success");
+    $('html').animate({scrollTop:0}, 'fast');
+    document.getElementById("messageUtil").innerHTML = "Doudou créé";
+
 });
 //----------------Envoi formulaire Détenteur------------
 $("#create_detenteur").click(function (e) {
@@ -48,6 +59,17 @@ $("#create_detenteur").click(function (e) {
     create_detenteur();
     $("main").fadeIn("slow");
     $("#form_detenteur").hide();
+
+    $("#messageUtil").show();
+    $("#messageUtil").css({
+        'position':'absolute',
+        'top':'50px',
+        'text-align':'center',
+        'width':'100%'
+    }).fadeOut(3000,'swing').addClass("alert alert-success");
+    $('html').animate({scrollTop:0}, 'fast');
+    document.getElementById("messageUtil").innerHTML = "Détenteur créé";
+
 });
 //----------------Bouton Trouver-----------------------------
 $("#find_btn").click(function () {
@@ -59,6 +81,12 @@ $("#find_btn").click(function () {
     $('#doudou').hide();
     $("#form_search").hide();
     $("#form_detenteur").hide();
+
+    //raz messages utilisateur
+    $('#messagePhoto').addClass("alert alert-danger");
+    document.getElementById("messageUtil").innerHTML = "";
+    document.getElementById("messagePhoto").innerHTML = "pas de photo sélectionnée";
+
 })
 //----------------Bouton Détenteur-----------------------------
 $("#id_btn").click(function () {
@@ -113,11 +141,29 @@ btn_chk.onclick = function () {
     adresseToGps();
 }
 
+
+//-----------------messages selection photo-----------------------------------
+
+$('#messagePhoto').addClass("alert alert-danger");
+document.getElementById("messagePhoto").innerHTML = "pas de photo sélectionnée";
+
+$("#photo").on("change",function(){
+    if($("#photo").val()!=""){
+        $('#messagePhoto').removeClass("alert alert-danger").addClass("alert alert-success");    
+        document.getElementById("messagePhoto").innerHTML = $("#photo").val();
+    }else{
+        $('#messagePhoto').removeClass("alert alert-success").addClass("alert alert-danger");    
+        document.getElementById("messagePhoto").innerHTML = "pas de photo sélectionnée";
+    }      
+})
+
 //------------Afficher les derniers doudous entrés----------------
 function show_all() {
 
     $.ajax({
-            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudous/random",
+
+            url: "http://localhost/doudou/doudou-sf/public/api/v1/doudous/random",
+
             method: "GET",
             data: {
                 num: 6
@@ -131,7 +177,9 @@ function show_all() {
             response.data.forEach(function (doudou) {
                 var a = $("<a>")
                 var div = $("<div>").attr("class", "image")
-                var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + doudou.image)
+
+                var pic = $("<img>").attr("src", "http://localhost/doudou/doudou-sf/public/img/photos/" + doudou.image)
+
                 var zoom = $("<i class=\"fas fa-search-plus\"></i>")
                 a.attr("data.id", doudou.id)
 
@@ -160,12 +208,10 @@ function searchDetails(id, data) {
         if (id == data[i].id) {
 
             $("#pic_doudou").empty();
-            var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + data[i].image)
 
-            /*pic.css("width", 200)
-            pic.css("height", 300)
-            pic.css("border", "2px solid white")
-            pic.css("border-radius", "25px")*/
+            var pic = $("<img>").attr("src", "http://localhost/doudou/doudou-sf/public/img/photos/" + data[i].image)
+
+  
 
             var color = data[i].color
             var date = data[i].dateFind
@@ -182,6 +228,7 @@ function searchDetails(id, data) {
                     <p> Lieu de decouverte :${place} </p>
                     <p> Type du doudou : ${type} </p>                                
                 </div>`);
+
 
             $("#contact").empty();
             var prenom = data[i].personne.prenom
@@ -214,7 +261,9 @@ function find_doudou() {
     form_data.append("text", type);
     form_data.append("text", detenteur);
     $.ajax({
-        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudou/",
+
+        url: "http://localhost/doudou/doudou-sf/public/api/v1/doudou/",
+
         dataType: 'json', // what to expect back from the PHP script, if anything
         cache: false,
         contentType: false,
@@ -232,7 +281,9 @@ function find_doudou() {
 //-------------------------Créer un détenteur-------------------------------
 function create_detenteur() {
     $.ajax({
-        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteur/",
+
+        url: "http://localhost/doudou/doudou-sf/public/api/v1/detenteur/",
+
         method: "POST",
         data: $("#ajout_detenteur_form").serialize(),
     })
@@ -256,7 +307,9 @@ function initMap(latitude, longitude) {
 //------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
 function selectDetenteur() {
     $.ajax({
-            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
+
+            url: "http://localhost/doudou/doudou-sf/public/api/v1/detenteurs",
+
             method: "GET",
             dataType: 'json'
         })
@@ -293,7 +346,9 @@ function initMap(latitude, longitude) {
 //------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
 function selectDetenteur() {
     $.ajax({
-            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
+
+            url: "http://localhost/doudou/doudou-sf/public/api/v1/detenteurs",
+
             method: "GET",
             dataType: 'json'
         })
@@ -308,11 +363,12 @@ function selectDetenteur() {
                 $("#detenteur").append(option)
             })
         })
+
 }
 //------------------------Création des choix des types form recherche -------------------------------
 function selectType() {
     $.ajax({
-            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/types",
+            url: "http://localhost/doudou/doudou-sf/public/api/v1/types",
             method: "GET",
             dataType: 'json'
         })
@@ -335,7 +391,7 @@ function selectType() {
 //------------------------Création des choix des types form trouver -------------------------------
 function selectType2() {
     $.ajax({
-            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/types",
+            url: "http://localhost/doudou/doudou-sf/public/api/v1/types",
             method: "GET",
             dataType: 'json'
         })
@@ -374,6 +430,7 @@ function maPosition(position) {
     }
     gpsToAdresse(longiT, latiT);
 }
+
 
 function adresseToGps() {
     var adresse = document.getElementById("lieu").value;
@@ -462,7 +519,6 @@ function gpsToAdresse(lng, lat) {
        // autocomplete.addListener('place_changed', fillInAddress);
       }
 
-     
 
 function eraseCoords() {
     $("#coords").empty();
@@ -472,4 +528,6 @@ function eraseCoords() {
     var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
     $("#coords").append(putLongiT);
     $("#coords").append(putLatiT);
+
 }
+

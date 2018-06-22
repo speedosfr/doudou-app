@@ -17,6 +17,8 @@
 </head>
 
 <body>
+        
+
         <div class="container">
                 <div class=" title row justify-content-center" id="return">
                         <div id="titre">
@@ -149,10 +151,13 @@
                                         <select id="detenteur" name="detenteur" class="form-control" type="select"></select>
                                 </div>
                                 
-                                <div class="form-group"><!--bouton photo-->
+
+                                <div class="form-group"><!--input photo-->
 
                                         <label for="photo" class="btn btn-dark">Envoyer une photo</label>
                                         <input id="photo" class="input-file" type="file">
+                                        <div id="messagePhoto" ></div>                                
+
                                 </div>
 
                                 <button id="push_btn" class="btn btn-dark">Envoyer</button>
@@ -191,6 +196,15 @@
                 <!--///////////////////////////////////////////////////-Fin Container/////////////////////////////////////////////////-->
         </div>
 
+        <footer>
+                <div class="container">
+                        <p>©Julien - Laurent - Nicolas - 2018</p>
+                </div>
+        </footer>
+        <div id="messageUtil"></div>
+
+
+
         <!--/////////////////////////////////////////////////APPELS DES SCRIPTS JS/////////////////////////////////////////////////-->
 
         <script src="js/jquery.js"></script>
@@ -199,10 +213,6 @@
         async defer></script>  
 
 </body>
-<footer>
-        <div class="container">
-                <p>©Julien - Laurent - Nicolas - 2018</p>
-        </div>
-</footer>
+
 
 </html>
