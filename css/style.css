@@ -8,6 +8,19 @@ body {
      
 }
 
+.label-file {
+    cursor: pointer;
+    color: #00b1ca;
+    font-weight: bold;
+}
+.label-file:hover {
+    color: #25a5c4;
+}
+
+.input-file {
+    display: none;
+}
+
 #form_search, #form_find ,#form_detenteur, #doudou{
     display: none;
     max-width: 590px;
@@ -411,7 +424,21 @@ i{
 #geo_notOk {
     display: none;
 }
+
 #first_find{
     width: 100%;
 }
+
+#doudou_sch {
+    display: none;
+}
+#display_adr {
+    width: 100% !important;
+}
+#form_search{
+    display: none;
+}
+
+
+
 

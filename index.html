@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="css/style.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+                crossorigin="anonymous">
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
 
@@ -17,6 +18,8 @@
 </head>
 
 <body>
+        
+
         <div class="container">
                 <div class=" title row justify-content-center" id="return">
                         <div id="titre">
@@ -64,38 +67,27 @@
                 </div>
                 <!--/////////////////////////////////////////////////FORMULAIRE DE RECHERCHE/////////////////////////////////////////////////- -->
                 <div id="form_search">
-                        <form class="col-lg-12" name="ajout_doudou" id="recherche_doudou" action="" method="post">
+
+
+                        <form class="col-lg-12" id="search_doudou"  action="" method="POST" >
                                 <h3>Chercher mon Doudou</h3>
                                 <div class="form-group">
-
-                                        <input id="text" name="nom" type="text" class="form-control" placeholder="Votre nom">
+                                        <select id="color_sch" name="color_sch" class="form-control" type="select"></select>
                                 </div>
                                 <div class="form-group">
-
-                                        <input id="text" name="prenom" type="text" class="form-control" placeholder="Votre prénom">
-                                </div>
-                                <div class="form-group">
-
-                                        <input id="text" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte">
-                                </div>
-                                <div class="form-group">
-
-
-                                        <input id="date" name="date" type="date" class="form-control" placeholder="Date de la perte">
-                                </div>
-                                <div class="form-group">
-                                        <label for="textarea">Description : </label>
-                                        <textarea id="textarea" name="description" type="textarea" class="form-control"></textarea>
+                                        <input id="lieu_sch" name="lieu_sch" type="text" class="form-control" placeholder="Lieu de la perte">
                                 </div>
                                 <fieldset class="form-group">
                                         <div class="row">
+
                                                 <h5>Choisissez un type</h5>
 
-                                                <div id="options_type" class="col-sm-10"></div>
 
+                                                <div id="options_type" class="col-sm-10"></div>
                                         </div>
                                 </fieldset>
-                                <button id="send_btn" class="btn btn-dark">Envoyer</button>
+                                
+                                <button id="send_sch_btn" class="btn btn-dark">Envoyer</button>
                                 <button class="btn btn-dark back_button">Retour</button>
 
                         </form>
@@ -121,13 +113,15 @@
                                         <div id="options_type2" class="col-sm-10"></div>
                                 </fieldset>
                                 <div class="form-group">
+
                                         <h5>Où avez-vous trouvé le doudou</h5>
                                         <h6>Voulez vous être géolocalisé ?</h6>
                                         <input type="radio" id="chkGeo_ok" name="chkGeo"  />
+
                                         <label for="chkGeo">Oui</label>
-                                        <input type="radio" id="chkGeo_no" name="chkGeo"  checked />
+                                        <input type="radio" id="chkGeo_no" name="chkGeo" checked />
                                         <label for="chkGeo">Non</label>
-                                        
+
                                         <div id="mess_geo">
                                                 <div id="geo_ok" class="alert alert-success" role="alert">
                                                         Vous etes géolocalisé
@@ -136,17 +130,30 @@
                                                         Géolocalisation impossible
                                                 </div>
                                         </div>
-                                        <input id="lieu" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte" >
+                                        <div id="display_adr"></div>
+                                        <input id="lieu" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte">
                                         <div id="coords"></div>
-                                </div>
-                                <div class="form-group">
-                                        <h5>Déposez une photo du doudou</h5>
-                                        <input type="file" id="photo" name="photo">
+                                </div>                           
+                                      
+
+                         
+                              
+                                
+
+                                <div class="form-group"><!--input photo-->
+                                  <h5>Déposez une photo du doudou</h5>
+                                        <label for="photo" class="btn btn-dark">Envoyer une photo</label>
+                                        <input id="photo" class="input-file" type="file">
+                                        <div id="messagePhoto" ></div>                                
+
+
                                 </div>
 
                                 <button id="push_btn" class="btn btn-dark">Envoyer</button>
                                 <button class="btn btn-dark back_button">Retour</button>
+
                         </form>                       
+
                 </div>
                 <!--/////////////////////////////////////AFFICHAGE DETAILS DOUDOU/////////////////////////////////////////////////////////-->
                 <div id="doudou">
@@ -174,21 +181,32 @@
                                 <button class="btn btn-dark back_button">Retour</button>
                         </form>
                 </div>
+                 <!--/////////////////////////////////////AFFICHAGE DOUDOU TROUVE/////////////////////////////////////////////////////////-->
+                 <div id="doudou_sch">
+                        <div id="content_sch"><p>LOLOLOLOLOOL</p></div>
+                       
+                     
+                </div>
                 <!--///////////////////////////////////////////////////-Fin Container/////////////////////////////////////////////////-->
         </div>
+
+        <footer>
+                <div class="container">
+                        <p>©Julien - Laurent - Nicolas - 2018</p>
+                </div>
+        </footer>
+        <div id="messageUtil"></div>
+
+
 
         <!--/////////////////////////////////////////////////APPELS DES SCRIPTS JS/////////////////////////////////////////////////-->
 
         <script src="js/jquery.js"></script>
         <script src="js/app.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw&libraries=places"
-        async defer></script>  
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw&libraries=places&callback=initAutocomplete"
+                async defer></script>
 
 </body>
-<footer>
-        <div class="container">
-                <p>©Julien - Laurent - Nicolas - 2018</p>
-        </div>
-</footer>
+
 
 </html>
