@@ -41,6 +41,7 @@ $("#push_btn").click(function (e) {
     find_doudou();
     $("main").fadeIn("slow");
     $("#form_find").hide();
+    $("#messageUtil").show();
     $("#messageUtil").css({
         'position':'absolute',
         'top':'50px',
@@ -56,11 +57,14 @@ $("#create_detenteur").click(function (e) {
     create_detenteur();
     $("main").fadeIn("slow");
     $("#form_detenteur").hide();
+    $("#messageUtil").show();
     $("#messageUtil").css({
         'position':'absolute',
         'top':'50px',
-        'left':'50px'
+        'text-align':'center',
+        'width':'100%'
     }).fadeOut(3000,'swing').addClass("alert alert-success");
+    $('html').animate({scrollTop:0}, 'fast');
     document.getElementById("messageUtil").innerHTML = "Détenteur créé";
 });
 //----------------Bouton Trouver-----------------------------
@@ -73,6 +77,10 @@ $("#find_btn").click(function () {
     $('#doudou').hide();
     $("#form_search").hide();
     $("#form_detenteur").hide();
+    //raz messages utilisateur
+    $('#messagePhoto').addClass("alert alert-danger");
+    document.getElementById("messageUtil").innerHTML = "";
+    document.getElementById("messagePhoto").innerHTML = "pas de photo sélectionnée";
 })
 //----------------Bouton Détenteur-----------------------------
 $("#id_btn").click(function () {
