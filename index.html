@@ -8,116 +8,205 @@
         <link rel="stylesheet" href="css/style.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+
         <title>Doudou List</title>
 
 </head>
 
 <body>
+        
+
         <div class="container">
-                <div class="row justify-content-around">
-                        <button id="search_btn" class="btn btn-dark " type="button">Chercher</button>
-                        <button class="btn btn-dark " type="button">Trouver</button>
+                <div class=" title row justify-content-center" id="return">
+                        <div id="titre">
+                                <h1>S.O.S Doudou</h1>
+                        </div>
                 </div>
 
-                <div class="row justify-content-center">
 
- 
-
-                       <div id="titre">
-                               <h1>SOS Doudou</h1>
-                        </div> 
+                <div id="group" class="justify-center nofixtitle" role="group" aria-label="Basic example">
+                        <div id="search_btn">
+                                <i class="fas fa-search"></i>
+                                <span>Chercher</span>
+                        </div>
+                        <div id="id_btn">
+                                <i class="fas fa-user"></i>
+                                <span>Detenteur</span>
+                        </div>
+                        <div id="find_btn">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Trouver</span>
+                        </div>
 
                 </div>
-                <!-------------------------------------AFFICHAGE PHOTOS PAGE ACCUEIL----------------------------------------- -->
+
+                <!--/////////////////////////////////////////////////AFFICHAGE PHOTOS PAGE ACCUEIL///////////////////////////////////////////////// -->
                 <main id="content" class="row justify-content-center">
 
-
                 </main>
-                <!------------------------------------------FORMULAIRE DE RECHERCHE------------------------------------------- -->
+                <!--/////////////////////////////////////////////////FORMULAIRE DE PERSONNE///////////////////////////////////////////////// -->
+                <div id="form_detenteur">
+                        <form class="col-lg-12" id="ajout_detenteur_form" action="" method="post">
+                                <h3>Créer un Détenteur</h3>
+                                <div class="form-group">
 
+                                        <input id="newNom" name="lastName" type="text" class="form-control" placeholder="Votre nom">
+                                </div>
+                                <div class="form-group">
+
+                                        <input id="newPrenom" name="firstName" type="text" class="form-control" placeholder="Votre prénom">
+                                </div>
+                                <div class="form-group">
+
+                                        <input id="newEmail" name="email" type="text" class="form-control" placeholder="Votre email">
+                                </div>
+                                <button type="submit" id="create_detenteur" class="btn btn-dark">Envoyer</button>
+                                <button class="btn btn-dark back_button">Retour</button>
+                        </form>
+                </div>
+                <!--/////////////////////////////////////////////////FORMULAIRE DE RECHERCHE/////////////////////////////////////////////////- -->
                 <div id="form_search">
-                        <form class="col-lg-6" name="ajout_doudou" action="" method="post">
+                        <form class="col-lg-12" name="ajout_doudou" action="" method="post">
                                 <h3>Chercher mon Doudou</h3>
                                 <div class="form-group">
 
-                                        <input id="text" type="text" class="form-control" placeholder="Votre nom">
+                                        <input id="text" name="nom" type="text" class="form-control" placeholder="Votre nom">
                                 </div>
                                 <div class="form-group">
 
-                                        <input id="text" type="text" class="form-control" placeholder="Votre prénom">
+                                        <input id="text" name="prenom" type="text" class="form-control" placeholder="Votre prénom">
                                 </div>
                                 <div class="form-group">
 
-                                        <input id="text" type="text" class="form-control" placeholder="Lieu de la perte">
+                                        <input id="text" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte">
                                 </div>
                                 <div class="form-group">
 
 
-                                        <input id="date" type="date" class="form-control" placeholder="Date de la perte">
+                                        <input id="date" name="date" type="date" class="form-control" placeholder="Date de la perte">
                                 </div>
                                 <div class="form-group">
                                         <label for="textarea">Description : </label>
-                                        <textarea id="textarea" type="textarea" class="form-control"></textarea>
+                                        <textarea id="textarea" name="description" type="textarea" class="form-control"></textarea>
                                 </div>
                                 <fieldset class="form-group">
                                         <div class="row">
-                                                <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-                                                <div class="col-sm-10">
-                                                        <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                                                                <label class="form-check-label" for="gridRadios1">
-                                                                        Peluche
-                                                                </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                                                                <label class="form-check-label" for="gridRadios2">
-                                                                        Chiffe
-                                                                </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
-                                                                <label class="form-check-label" for="gridRadios3">
-                                                                        Poupée
-                                                                </label>
-                                                        </div>
-                                                        <div class="form-check disabled">
-                                                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
-                                                                <label class="form-check-label" for="gridRadios3">
-                                                                        Non-défini
-                                                                </label>
-                                                        </div>
-                                                </div>
+                                                <legend class="col-form-label col-sm-2 pt-0">Type</legend>
+
+                                                <div id="options_type" class="col-sm-10"></div>
+
                                         </div>
-                                        <button id="send_btn" class="btn btn-dark">Envoyer</button>
-                                        <button type="button" class="btn btn-dark">Retour</button>
                                 </fieldset>
+                                <button id="send_btn" class="btn btn-dark">Envoyer</button>
+                                <button class="btn btn-dark back_button">Retour</button>
+
                         </form>
                 </div>
-                <!------------------------------------------AFFICHAGE DETAILS DOUDOU---------------------------------------------->
-                <div id="details_doudou" class="col align-self-end"> 
-                        <h1>DETAILS DU DOUDOU</h1>
+                <!--//////////////////////////////////////FORMULAIRE DE TROUVAILLE//////////////////////////////////////// -->
+                <div id="form_find">
+
+                        <form class="col-lg-12" id="find_doudou" action="" method="POST" enctype="multipart/form-data">
+
+                                <h3>Déclarer un Doudou</h3>
+                                <div class="form-group">
+
+                                        <input id="couleur" name="color" type="text" class="form-control" placeholder="Couleur principale du doudou">
+                                </div>
+                                <fieldset class="form-group">
+                                        <div class="row">
+                                                <legend class="col-form-label col-sm-2 pt-0">Type</legend>
+
+                                                <div id="options_type2" class="col-sm-10"></div>
+
+                                        </div>
+                                </fieldset>
+                                <div class="form-group">
+                                        <h6>Voulez vous etre géolocalisé ?</h6>
+                                        <input type="radio" id="chkGeo_ok" name="chkGeo"  />
+                                        <label for="chkGeo">Oui</label>
+                                        <input type="radio" id="chkGeo_no" name="chkGeo"  checked />
+                                        <label for="chkGeo">Non</label>
+                                        
+                                        <div id="mess_geo">
+                                                <div id="geo_ok" class="alert alert-success" role="alert">
+                                                        Vous etes géolocalisé
+                                                </div>
+                                                <div id="geo_notOk" class="alert alert-danger" role="alert">
+                                                        Géolocalisation impossible
+                                                </div>
+                                        </div>
+                                        <div id = "display_adr"></div>
+                                        <input id="lieu" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte" >
+                                        <div id="coords"></div>
+
+                                </div>
+                                <!--<div class="form-group">
+
+                                        <input id="photo" name="photo" type="texte" class="form-control" placeholder="Photo du doudou trouvé">
+                                </div>-->
+                                <div class="form-group">
+                                        <select id="detenteur" name="detenteur" class="form-control" type="select"></select>
+                                </div>
+                                
+                                <div class="form-group"><!--input photo-->
+
+                                        <label for="photo" class="btn btn-dark">Envoyer une photo</label>
+                                        <input id="photo" class="input-file" type="file">
+                                        <div id="messagePhoto" ></div>                                
+                                </div>
+
+                                <button id="push_btn" class="btn btn-dark">Envoyer</button>
+                                <button class="btn btn-dark back_button">Retour</button>
+
+
+                        </form>
+                        
                 </div>
-                
+                <!--/////////////////////////////////////AFFICHAGE DETAILS DOUDOU/////////////////////////////////////////////////////////-->
+                <div id="doudou">
+                        <div id="pic_doudou"></div>
+                        <div id="details">
+                                <h5>Les infos du doudou !</h5>
+                                <div id="txt_details">
+                                        <div class="alert alert-primary" role="alert">
+                                                Détails
+                                        </div>
+                                </div>
 
+                                <p class="small">
+                                        <small>Il a été trouvé ici !</small>
+                                </p>
+
+                                <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div id="map"></div>
+                        <div id="details">
+                                <h5>Le détenteur !</h5>
+                                <div id="contact"></div>
+                        </div>
+                        <form action="" method="">
+                                <button class="btn btn-dark back_button">Retour</button>
+                        </form>
+                </div>
+                <!--///////////////////////////////////////////////////-Fin Container/////////////////////////////////////////////////-->
         </div>
-
-  </div>
-        
-<!--------------------------------------------------------APPELS DES SCRIPTS JS-------------------------------------------------->
+        <footer>
+                <div class="container">
+                        <p>©Julien - Laurent - Nicolas - 2018</p>
+                </div>
+        </footer>
+        <div id="messageUtil"></div>
+        <!--/////////////////////////////////////////////////APPELS DES SCRIPTS JS/////////////////////////////////////////////////-->
 
         <script src="js/jquery.js"></script>
         <script src="js/app.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGJOGaEVDkzLangGE-Jr8SX0ACE1-zIug"
-                async defer>
-
-  </script>
-
-
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw&libraries=places&callback=initAutocomplete"
+        async defer></script>  
 
 </body>
-<footer></footer>
+
 
 </html>
-
-
