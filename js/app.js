@@ -81,6 +81,7 @@ $("#send_sch_btn").click(function (e) {
     console.log("je suis la ");
     $("#form_search").hide();
     $("#doudou_sch").css("display","block");
+    
     search_doudou();
 });
 //----------------Bouton Trouver-----------------------------
@@ -173,7 +174,7 @@ $("#photo").on("change",function(){
 function show_all() {
     $.ajax({
 
-            url: "http://localhost/doudou/doudou-sf/public/api/v1/doudous/random",
+            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudous/random",
 
             method: "GET",
             data: {
@@ -189,7 +190,7 @@ function show_all() {
                 var a = $("<a>")
                 var div = $("<div>").attr("class", "image")
 
-                var pic = $("<img>").attr("src", "http://localhost/doudou/doudou-sf/public/img/photos/" + doudou.image)
+                var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + doudou.image)
 
                 var zoom = $("<i class=\"fas fa-search-plus\"></i>")
                 a.attr("data.id", doudou.id)
@@ -218,14 +219,9 @@ function searchDetails(id, data) {
         if (id == data[i].id) {
 
             $("#pic_doudou").empty();
-<<<<<<< HEAD
+
             var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + data[i].image)           
-=======
 
-            var pic = $("<img>").attr("src", "http://localhost/doudou/doudou-sf/public/img/photos/" + data[i].image)
-
-  
->>>>>>> 6a5e971e4771663638478368c23862cdc3b0f5f9
 
             var color = data[i].color
             var date  = data[i].dateFind
@@ -277,7 +273,7 @@ function find_doudou() {
     form_data.append("text", detenteur);
     $.ajax({
 
-        url: "http://localhost/doudou/doudou-sf/public/api/v1/doudou/",
+        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudou/",
 
         dataType: 'json', // what to expect back from the PHP script, if anything
         cache: false,
@@ -297,7 +293,7 @@ function find_doudou() {
 function create_detenteur() {
     $.ajax({
 
-        url: "http://localhost/doudou/doudou-sf/public/api/v1/detenteur/",
+        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteur/",
 
         method: "POST",
         data: $("#ajout_detenteur_form").serialize(),
@@ -323,7 +319,7 @@ function initMap(latitude, longitude) {
 function selectDetenteur() {
     $.ajax({
 
-            url: "http://localhost/doudou/doudou-sf/public/api/v1/detenteurs",
+            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
 
             method: "GET",
             dataType: 'json'
@@ -347,7 +343,7 @@ function selectDetenteur() {
 function selectDetenteur() {
     $.ajax({
 
-            url: "http://localhost/doudou/doudou-sf/public/api/v1/detenteurs",
+            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
 
             method: "GET",
             dataType: 'json'
@@ -368,7 +364,7 @@ function selectDetenteur() {
 //------------------------Création des choix des types form recherche -------------------------------
 function selectType() {
     $.ajax({
-            url: "http://localhost/doudou/doudou-sf/public/api/v1/types",
+            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/types",
             method: "GET",
             dataType: 'json'
         })
@@ -391,7 +387,7 @@ function selectType() {
 //------------------------Création des choix des types form trouver -------------------------------
 function selectType2() {
     $.ajax({
-            url: "http://localhost/doudou/doudou-sf/public/api/v1/types",
+            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/types",
             method: "GET",
             dataType: 'json'
         })
@@ -595,10 +591,6 @@ function eraseCoords() {
     var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
     $("#coords").append(putLongiT);
     $("#coords").append(putLatiT);
-<<<<<<< HEAD
-}
-=======
 
 }
 
->>>>>>> 6a5e971e4771663638478368c23862cdc3b0f5f9
