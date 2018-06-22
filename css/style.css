@@ -411,7 +411,15 @@ i{
 #geo_notOk {
     display: none;
 }
+#doudou_sch {
+    display: none;
+}
 #display_adr {
     width: 100% !important;
 }
+#form_search{
+    display: none;
+}
+
+
 

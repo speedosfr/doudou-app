@@ -1,4 +1,7 @@
 show_all();
+
+var BASE_COLOR = "Choisir la couleur principale(parmi les couleurs trouvées)";
+
 //----------------Blocage menu--------------------------
 $(window).scroll(function () { //Au scroll dans la fenetre on déclenche la fonction
     if ($(this).scrollTop() > 90) { //si on a défini de plus de 96 px du haut vers le bas
@@ -23,6 +26,7 @@ $(window).scroll(function () { //Au scroll dans la fenetre on déclenche la fonc
 //----------------Bouton Rechercher--------------------------
 $("#search_btn").click(function () {
     selectType();
+    selectColor();
     $("main").hide();
     $("#form_search").fadeIn("slow");
     $('#details_doudou').hide();
@@ -32,7 +36,7 @@ $("#search_btn").click(function () {
 });
 //----------------Bouton envoi formulaire Chercher------------
 $("#send_btn").click(function () {
-    $("main").show();
+    
     $("#form_search").fadeIn("slow");
 });
 //----------------Bouton envoi formulaire Trouver------------
@@ -48,6 +52,14 @@ $("#create_detenteur").click(function (e) {
     create_detenteur();
     $("main").fadeIn("slow");
     $("#form_detenteur").hide();
+});
+//----------------Bouton Rechercher mon doudou--------------------------
+$("#send_sch_btn").click(function (e) {    
+    e.preventDefault();
+    console.log("je suis la ");
+    $("#form_search").hide();
+    $("#doudou_sch").css("display","block");
+    search_doudou();
 });
 //----------------Bouton Trouver-----------------------------
 $("#find_btn").click(function () {
@@ -115,7 +127,6 @@ btn_chk.onclick = function () {
 
 //------------Afficher les derniers doudous entrés----------------
 function show_all() {
-
     $.ajax({
             url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudous/random",
             method: "GET",
@@ -140,7 +151,6 @@ function show_all() {
                 div.append(zoom)
                 a.append(div)
             })
-
             $("#content").on("click", "a", function () {
                 var id = $(this).attr("data.id")
 
@@ -160,33 +170,29 @@ function searchDetails(id, data) {
         if (id == data[i].id) {
 
             $("#pic_doudou").empty();
-            var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + data[i].image)
-
-            /*pic.css("width", 200)
-            pic.css("height", 300)
-            pic.css("border", "2px solid white")
-            pic.css("border-radius", "25px")*/
+            var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + data[i].image)           
 
             var color = data[i].color
-            var date = data[i].dateFind
+            var date  = data[i].dateFind
             var place = data[i].placeFind
-            var type = data[i].type.label
-            var lat = data[i].lat
-            var lng = data[i].lng
+            var type  = data[i].type.label
+            var lat   = data[i].lat
+            var lng   = data[i].lng
 
             $("#pic_doudou").append(pic);
             $("#txt_details").append(
 
                 `<div id ="show_details">
                     <p> Couleur : ${color} </p>
-                    <p> Lieu de decouverte :${place} </p>
+                    <p> Lieu de decouverte : ${place} </p>
                     <p> Type du doudou : ${type} </p>                                
                 </div>`);
 
             $("#contact").empty();
+
             var prenom = data[i].personne.prenom
-            var nom = data[i].personne.nom
-            var email = data[i].personne.email
+            var nom    = data[i].personne.nom
+            var email  = data[i].personne.email
 
             $("#contact").append(
                 `<div id="show_contact">
@@ -274,22 +280,7 @@ function selectDetenteur() {
         })
 
 }
-//----------------------------Afficher carte--------------------------------
-function initMap(latitude, longitude) {
-    var uluru = {
-        lat: (parseFloat(latitude)),
-        lng: (parseFloat(longitude))
-    };
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
-        center: uluru
-    });
-    var marker = new google.maps.Marker({
-        position: uluru,
-        map: map
-    });
 
-}
 //------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
 function selectDetenteur() {
     $.ajax({
@@ -323,7 +314,7 @@ function selectType() {
             response.data.forEach(function (type) {
                 var label = type.label
                 var option = $(`<div class="form-check">
-                                <input class="form-check-input" type="radio" name="type" id="${type.id}" value="${type.id}" checked>
+                                <input class="form-check-input" type="radio" name="type" id="${type.id}" value="${type.label}" checked>
                                 <label class="form-check-label" for="${type.id}">${type.label}</label>
                             </div>`)
 
@@ -353,6 +344,28 @@ function selectType2() {
             })
         })
 }
+
+//------------------------Création des choix des couleurs-------------------------------
+function selectColor() {
+    $.ajax({
+            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudous",
+            method: "GET",
+            dataType: 'json'
+        })
+        .done(function (response) {
+            $("#color_sch").append(option)
+            var option = $(`<option value="${BASE_COLOR}">${BASE_COLOR}</option>`)
+            $("#color_sch").append(option)
+
+            response.data.forEach(function (doudou) {
+                var couleur = doudou.color
+                if (doudou.color != "")
+                    var option = $(`<option value="${couleur}">${couleur} </option>`)
+                $("#color_sch").append(option)
+            })
+        })
+
+}
 //------------------------Geolocalisation-------------------------------
 
 function maPosition(position) {
@@ -380,7 +393,6 @@ function adresseToGps() {
     console.log(adresse)
     $.ajax({
             url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + adresse + "&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
-
             method: "GET",
             dataType: 'json'
         })
@@ -395,14 +407,11 @@ function adresseToGps() {
             var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
             $("#coords").append(putLongiT);
             $("#coords").append(putLatiT);
-            console.log(longiT + " " + latiT)
-
-
         })
 }
 
+//------------------------------------------- Convertion des points GPS en adresse -----------------------------------------------------
 function gpsToAdresse(lng, lat) {
-    console.log(lng + " " + lat);
     $.ajax({
             url: "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
             method: "GET",
@@ -411,7 +420,8 @@ function gpsToAdresse(lng, lat) {
         .done(function (response) {
             var adresse = (response.results[0].formatted_address)
             console.log("l'adresse est " + adresse)
-            if (adresse == "48 Rue Gambetta , 44000 Nantes , France") {
+            console.log(lng + " " + lat);
+            if (lat == 47.223958599999996 & lng == -1.5408058) {
                 console.log("je suis dans l'adresse")
                 $("#display_adr").empty();
                 adresse = " EPSI 16, boulevard Général de Gaulle 44200 Nantes"
@@ -431,38 +441,85 @@ function gpsToAdresse(lng, lat) {
         })
 
 }
+//----------------------------------------------Rechercher un doudou---------------------------------------------------------------------
+
+function search_doudou() {
+    
+    var couleur_sch = $("#color_sch");   
+    var lieu_sch = $("#lieu_sch");
+    var type_sch = $('input[name=type]:checked').val();    
+
+    var form_data = new FormData($('#search_doudou').get(0));
+
+    form_data.append("text", couleur_sch);
+    form_data.append("text", lieu_sch);
+    form_data.append("text", type_sch);
+    
+    console.log("la variable couleur est " +couleur_sch.val())
+    console.log("la variable lieu est " +lieu_sch.val())
+    console.log("la variable type est " +type_sch)
 
 
-// This example displays an address form, using the autocomplete feature
-      // of the Google Places API to help users fill in the information.
 
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+    //----------------------------------Recherche sur couleur,lieu,type----------------------------------
+    
+        $.ajax({
+            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudous",
+            method: "GET",
+            dataType: 'json',
+            data: {
+                q:"",                
+                c: couleur_sch.val(),
+                l: lieu_sch.val(),
+                t: type_sch
+            }
+        })
+        .done(function (response) {
+            console.log(response)
+            $("#content_sch").empty();
 
-      var placeSearch, autocomplete;
-      var componentForm = {
-        street_number: 'short_name',
-        route: 'long_name',
-        locality: 'long_name',
-        administrative_area_level_1: 'short_name',
-        country: 'long_name',
-        postal_code: 'short_name'
-      };
+            response.data.forEach(function (doudou) {              
 
-      function initAutocomplete() {
-        // Create the autocomplete object, restricting the search to geographical
-        // location types.
-        autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */(document.getElementById('lieu')),
-            {types: ['geocode']});
+                var a = $("<a>")
+                var div = $("<div>").attr("class", "image")
+                var pic = $("<img>").attr("src", "http://localhost:8082/doudou/doudou-sf/public/img/photos/" + doudou.image)
+                var zoom = $("<i class=\"fas fa-search-plus\"></i>")
+                a.attr("data.id", doudou.id)
 
-        // When the user selects an address from the dropdown, populate the address
-        // fields in the form.
-       // autocomplete.addListener('place_changed', fillInAddress);
-      }
+                $("#content_sch").append(a)
+                div.append(pic)
+                div.append(zoom)
+                a.append(div)
+            })
+            $("#content_sch").on("click", "a", function () {
+                var id = $(this).attr("data.id")
 
-     
+                $("main").hide();
+                $('#doudou').fadeIn("slow");
+                searchDetails(id, response.data);
+            });
+        })
+}
+// -----------------------------------Autocompletion de l'adresse formulaire trouver----------------------------------
+var placeSearch, autocomplete;
+var componentForm = {
+    street_number: 'short_name',
+    route: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'short_name',
+    country: 'long_name',
+    postal_code: 'short_name'
+};
+
+function initAutocomplete() {
+    autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */
+        (document.getElementById('lieu')), {
+            types: ['geocode']
+        });
+}
+
+
 
 function eraseCoords() {
     $("#coords").empty();
