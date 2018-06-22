@@ -424,6 +424,11 @@ i{
 #geo_notOk {
     display: none;
 }
+
+#first_find{
+    width: 100%;
+}
+
 #doudou_sch {
     display: none;
 }
@@ -433,6 +438,7 @@ i{
 #form_search{
     display: none;
 }
+
 
 
 

@@ -25,6 +25,7 @@ $(window).scroll(function () { //Au scroll dans la fenetre on déclenche la fonc
 
 //----------------Bouton Rechercher--------------------------
 $("#search_btn").click(function () {
+    $("#recherche_doudou")[0].reset();
     selectType();
     selectColor();
     $("main").hide();
@@ -86,6 +87,7 @@ $("#send_sch_btn").click(function (e) {
 });
 //----------------Bouton Trouver-----------------------------
 $("#find_btn").click(function () {
+    $("#find_doudou")[0].reset();
     selectDetenteur();
     selectType2();
     $("main").hide();
@@ -103,6 +105,19 @@ $("#find_btn").click(function () {
 })
 //----------------Bouton Détenteur-----------------------------
 $("#id_btn").click(function () {
+    $("#ajout_detenteur_form")[0].reset();
+    $("main").hide();
+    $("#form_detenteur").fadeIn( "slow" );
+    $('#details_doudou').hide();
+    $('#doudou').hide();
+    $("#form_search").hide();
+    $("#form_find").hide();
+   
+})
+//----------------Bouton first_find-----------------------------
+$("#first_find").click(function (e) {
+    e.preventDefault();
+    $("#ajout_detenteur_form")[0].reset();
     $("main").hide();
     $("#form_detenteur").fadeIn("slow");
     $('#details_doudou').hide();
@@ -113,7 +128,13 @@ $("#id_btn").click(function () {
 })
 //----------------Bouton retour---------------------------------
 $("back_button").click(function () {
-    $("main").fadeIn("slow");
+
+    $("#recherche_doudou")[0].reset();
+    $("#ajout_detenteur_form")[0].reset();
+    $("#find_doudou")[0].reset();
+    $("#content").empty();
+    show_all();
+    $("main").fadeIn( "slow" );
     $("#form_detenteur").hide();
     $('#details_doudou').hide();
     $('#doudou').hide();
@@ -122,8 +143,12 @@ $("back_button").click(function () {
 })
 //------------H1 Retour Accueil------------------------------------
 var retour = document.getElementById('return');
-retour.onclick = function () {
-    $("main").fadeIn("slow");
+
+retour.onclick = function() {
+    $("#content").empty();
+    show_all();
+    $("main").fadeIn( "slow" );
+
     $("#form_detenteur").hide();
     $('#details_doudou').hide();
     $('#doudou').hide();
@@ -132,27 +157,27 @@ retour.onclick = function () {
 };
 //----------------Bouton Geolocalisation---------------------------------
 var btn_chk = document.getElementById('chkGeo_ok');
-btn_chk.onclick = function () {
-    navigator.geolocation.getCurrentPosition(maPosition, null, {
-        enableHighAccuracy: true
-    });
-    $("#lieu").css("display", "none");
-    $("#mess_geo").css("display", "block");
+
+btn_chk.onclick = function() {
+    navigator.geolocation.getCurrentPosition(maPosition);
+    $("#lieu").css("display","none");
+    $("#mess_geo").css("display","block");
 }
 var btn_chk = document.getElementById('chkGeo_no');
-btn_chk.onclick = function () {
-    $("#mess_geo").css("display", "none");
-    $("#display_adr").css("display", "none");
-    $("#lieu").css("display", "block");
-
-    eraseCoords();
+btn_chk.onclick = function() {
+    $("#mess_geo").css("display","none");   
+    $("#lieu").css("display","block");
+    //eraseCoords();
     //reverseCoords();
-    //console.log(longiT+" "+latiT)
+   
 }
-var btn_chk = document.getElementById('detenteur');
-btn_chk.onclick = function () {
-    adresseToGps();
-}
+
+$("#lieu").on("keyup", function(e){
+    console.log("je suis la")
+    adresseToGps(); 
+})
+
+
 
 
 //-----------------messages selection photo-----------------------------------
@@ -170,6 +195,7 @@ $("#photo").on("change",function(){
     }      
 })
 
+
 //------------Afficher les derniers doudous entrés----------------
 function show_all() {
     $.ajax({
@@ -178,7 +204,7 @@ function show_all() {
 
             method: "GET",
             data: {
-                num: 6
+                num: 60
             },
             dataType: 'json'
         })
@@ -271,6 +297,7 @@ function find_doudou() {
     form_data.append("text", lieu);
     form_data.append("text", type);
     form_data.append("text", detenteur);
+    console.log(couleur.val());
     $.ajax({
 
         url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudou/",
@@ -299,6 +326,7 @@ function create_detenteur() {
         data: $("#ajout_detenteur_form").serialize(),
     })
 }
+
 //----------------------------Afficher carte--------------------------------
 function initMap(latitude, longitude) {
     var uluru = {
@@ -315,6 +343,7 @@ function initMap(latitude, longitude) {
     });
 
 }
+
 //------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
 function selectDetenteur() {
     $.ajax({
@@ -343,22 +372,21 @@ function selectDetenteur() {
 function selectDetenteur() {
     $.ajax({
 
-            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
+        url: "http://localhost:/doudou/doudou-sf/public/api/v1/detenteurs",
+        method: "GET",
+        dataType: 'json'
+    })
+    .done(function (response) {
+        $("#detenteur").empty();
 
-            method: "GET",
-            dataType: 'json'
+        response.data.forEach(function (detenteur) {
+            var prenom = detenteur.prenom
+            var nom = detenteur.nom
+            var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
+
+            $("#detenteur").append(option)
         })
-        .done(function (response) {
-            $("#detenteur").empty();
-
-            response.data.forEach(function (detenteur) {
-                var prenom = detenteur.prenom
-                var nom = detenteur.nom
-                var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
-
-                $("#detenteur").append(option)
-            })
-        })
+    })
 
 }
 //------------------------Création des choix des types form recherche -------------------------------
@@ -393,6 +421,7 @@ function selectType2() {
         })
         .done(function (response) {
 
+
             $("#options_type2").empty();
             response.data.forEach(function (type) {
                 var label = type.label
@@ -412,6 +441,7 @@ function selectColor() {
             url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudous",
             method: "GET",
             dataType: 'json'
+
         })
         .done(function (response) {
             $("#color_sch").append(option)
@@ -430,6 +460,7 @@ function selectColor() {
 //------------------------Geolocalisation-------------------------------
 
 function maPosition(position) {
+
     $("#coords").empty();
 
     longiT = position.coords.longitude;
@@ -450,10 +481,12 @@ function maPosition(position) {
 }
 
 
+
 function adresseToGps() {
     var adresse = document.getElementById("lieu").value;
     console.log(adresse)
     $.ajax({
+
             url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + adresse + "&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
             method: "GET",
             dataType: 'json'
@@ -580,7 +613,6 @@ function initAutocomplete() {
             types: ['geocode']
         });
 }
-
 
 
 function eraseCoords() {
