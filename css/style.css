@@ -21,7 +21,7 @@ body {
     display: none;
 }
 
-#form_search, #form_find ,#form_detenteur, #doudou{
+#form_search, #form_find ,#form_detenteur, #doudou,#doudou_map{
     display: none;
     max-width: 590px;
     margin: 0 auto;
@@ -29,7 +29,7 @@ body {
     background-color: rgba(255, 255, 255, 0.466);
 }
 
-#form_search, #form_find ,#form_detenteur, #content, #doudou{
+#form_search, #form_find ,#form_detenteur, #content, #doudou,#doudou_map{
     margin: 20px auto 70px;
 }
 
@@ -75,7 +75,7 @@ body {
     margin: 25%; 
 }*/
 
-#map {         
+#map ,#map_doudou {         
     height: 400px;
     width: 100%;
     margin: auto;
@@ -438,7 +438,12 @@ i{
 #form_search{
     display: none;
 }
-
-
+#doudou_map {
+    display: none;
+}
+#small_pic {
+    width: 80px;
+    height: auto;
+}
 
 

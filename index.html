@@ -18,7 +18,7 @@
 </head>
 
 <body>
-        
+
 
         <div class="container">
                 <div class=" title row justify-content-center" id="return">
@@ -69,7 +69,7 @@
                 <div id="form_search">
 
 
-                        <form class="col-lg-12" id="search_doudou"  action="" method="POST" >
+                        <form class="col-lg-12" id="search_doudou" action="" method="POST">
                                 <h3>Chercher mon Doudou</h3>
                                 <div class="form-group">
                                         <select id="color_sch" name="color_sch" class="form-control" type="select"></select>
@@ -86,7 +86,7 @@
                                                 <div id="options_type" class="col-sm-10"></div>
                                         </div>
                                 </fieldset>
-                                
+                                <button id="show_map" class="btn btn-dark">Visualiser la Carte des Doudous</button></form> </br>
                                 <button id="send_sch_btn" class="btn btn-dark">Envoyer</button>
                                 <button class="btn btn-dark back_button">Retour</button>
 
@@ -102,7 +102,7 @@
                                         <h5>Identifiez-vous</h5>
                                         <select id="detenteur" name="detenteur" class="form-control" type="select"></select>
                                         <p></p>
-                                        <button id="first_find" class="btn btn-dark">C'est mon premier doudou.</button>     
+                                        <button id="first_find" class="btn btn-dark">C'est mon premier doudou.</button>
                                 </div>
                                 <div class="form-group">
                                         <h5>Indiquez une couleur</h5>
@@ -116,7 +116,7 @@
 
                                         <h5>Où avez-vous trouvé le doudou</h5>
                                         <h6>Voulez vous être géolocalisé ?</h6>
-                                        <input type="radio" id="chkGeo_ok" name="chkGeo"  />
+                                        <input type="radio" id="chkGeo_ok" name="chkGeo" />
 
                                         <label for="chkGeo">Oui</label>
                                         <input type="radio" id="chkGeo_no" name="chkGeo" checked />
@@ -133,26 +133,20 @@
                                         <div id="display_adr"></div>
                                         <input id="lieu" name="lieu" type="text" class="form-control" placeholder="Lieu de la perte">
                                         <div id="coords"></div>
-                                </div>                           
-                                      
+                                </div>
 
-                         
-                              
-                                
-
-                                <div class="form-group"><!--input photo-->
-                                  <h5>Déposez une photo du doudou</h5>
+                                <div class="form-group">
+                                        <!--input photo-->
+                                        <h5>Déposez une photo du doudou</h5>
                                         <label for="photo" class="btn btn-dark">Envoyer une photo</label>
-                                        <input id="photo" class="input-file" type="file">
-                                        <div id="messagePhoto" ></div>                                
-
-
+                                        <input id="photo" name="photo" class="input-file" type="file">
+                                        <div id="messagePhoto"></div>
                                 </div>
 
                                 <button id="push_btn" class="btn btn-dark">Envoyer</button>
                                 <button class="btn btn-dark back_button">Retour</button>
 
-                        </form>                       
+                        </form>
 
                 </div>
                 <!--/////////////////////////////////////AFFICHAGE DETAILS DOUDOU/////////////////////////////////////////////////////////-->
@@ -167,7 +161,9 @@
                                 </div>
 
                                 <p class="small">
-                                        <small>Il a été trouvé ici !</small>
+                                        <small>Il a été trouvé ici !</br>
+                                                Cliquer sur le marker</br>
+                                                pour connaitre le détenteur</small>
                                 </p>
 
                                 <i class="fas fa-chevron-down"></i>
@@ -181,12 +177,18 @@
                                 <button class="btn btn-dark back_button">Retour</button>
                         </form>
                 </div>
-                 <!--/////////////////////////////////////AFFICHAGE DOUDOU TROUVE/////////////////////////////////////////////////////////-->
-                 <div id="doudou_sch">
-                        <div id="content_sch"><p>LOLOLOLOLOOL</p></div>
-                       
-                     
+                <!--/////////////////////////////////////AFFICHAGE DOUDOU TROUVE/////////////////////////////////////////////////////////-->
+                <div id="doudou_sch">
+                        <div id="content_sch">
+                               
+                        </div>
+
+
                 </div>
+                 <!--/////////////////////////////////////AFFICHAGE CARTE DES DOUDOUS /////////////////////////////////////////////////////////-->
+                 <div id="doudou_map">
+                         <div id= "map_doudou"></div>
+                 </div>
                 <!--///////////////////////////////////////////////////-Fin Container/////////////////////////////////////////////////-->
         </div>
 

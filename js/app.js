@@ -25,7 +25,7 @@ $(window).scroll(function () { //Au scroll dans la fenetre on déclenche la fonc
 
 //----------------Bouton Rechercher--------------------------
 $("#search_btn").click(function () {
-    $("#recherche_doudou")[0].reset();
+    $("#search_doudou")[0].reset();
     selectType();
     selectColor();
     $("main").hide();
@@ -34,6 +34,7 @@ $("#search_btn").click(function () {
     $('#doudou').hide();
     $("#form_find").hide();
     $("#form_detenteur").hide();
+    
 });
 //----------------Bouton envoi formulaire Chercher------------
 $("#send_btn").click(function () {
@@ -46,7 +47,6 @@ $("#push_btn").click(function (e) {
     find_doudou();
     $("main").fadeIn("slow");
     $("#form_find").hide();
-
     $("#messageUtil").show();
     $("#messageUtil").css({
         'position':'absolute',
@@ -96,7 +96,7 @@ $("#find_btn").click(function () {
     $('#doudou').hide();
     $("#form_search").hide();
     $("#form_detenteur").hide();
-
+    $("#content_sch").hide();
     //raz messages utilisateur
     $('#messagePhoto').addClass("alert alert-danger");
     document.getElementById("messageUtil").innerHTML = "";
@@ -112,6 +112,7 @@ $("#id_btn").click(function () {
     $('#doudou').hide();
     $("#form_search").hide();
     $("#form_find").hide();
+    $("#content_sch").hide();
    
 })
 //----------------Bouton first_find-----------------------------
@@ -162,29 +163,30 @@ btn_chk.onclick = function() {
     navigator.geolocation.getCurrentPosition(maPosition);
     $("#lieu").css("display","none");
     $("#mess_geo").css("display","block");
+    $("#display_adr").css("display","block"); 
 }
 var btn_chk = document.getElementById('chkGeo_no');
 btn_chk.onclick = function() {
     $("#mess_geo").css("display","none");   
     $("#lieu").css("display","block");
-    //eraseCoords();
-    //reverseCoords();
-   
+    $("#display_adr").css("display","none"); 
+    eraseCoords();       
 }
 
 $("#lieu").on("keyup", function(e){
     console.log("je suis la")
     adresseToGps(); 
 })
-
-
-
-
+//-------------------Bouton visualisation carte des doudous----------------------
+$("#show_map").click(function (e) {
+    e.preventDefault();
+$("#form_search").hide();
+$("#doudou_map").fadeIn( "slow" );
+show_dodousPoints();
+})
 //-----------------messages selection photo-----------------------------------
-
 $('#messagePhoto').addClass("alert alert-danger");
 document.getElementById("messagePhoto").innerHTML = "pas de photo sélectionnée";
-
 $("#photo").on("change",function(){
     if($("#photo").val()!=""){
         $('#messagePhoto').removeClass("alert alert-danger").addClass("alert alert-success");    
@@ -194,8 +196,6 @@ $("#photo").on("change",function(){
         document.getElementById("messagePhoto").innerHTML = "pas de photo sélectionnée";
     }      
 })
-
-
 //------------Afficher les derniers doudous entrés----------------
 function show_all() {
     $.ajax({
@@ -258,7 +258,7 @@ function searchDetails(id, data) {
 
             $("#pic_doudou").append(pic);
             $("#txt_details").append(
-
+                
                 `<div id ="show_details">
                     <p> Couleur : ${color} </p>
                     <p> Lieu de decouverte : ${place} </p>
@@ -279,9 +279,9 @@ function searchDetails(id, data) {
                     <a href="mailto:${email}"> ${email} </a>
                 </div>`);
         }
-
+        $("#doudou_sch").hide()
     }
-    initMap(lat, lng);
+    initMap(lat, lng, prenom, nom, email);
 }
 
 //--------------------créer un doudou----------------------------
@@ -312,7 +312,7 @@ function find_doudou() {
             alert(php_script_response); // display response from the PHP script, if any
         }
     })
-    console.log($("#find_doudou").serialize());
+    console.log($("je serialize"+"#find_doudou").serialize());
     console.log(file_data);
 
 }
@@ -328,7 +328,7 @@ function create_detenteur() {
 }
 
 //----------------------------Afficher carte--------------------------------
-function initMap(latitude, longitude) {
+function initMap(latitude, longitude, prenom, nom, email) {
     var uluru = {
         lat: (parseFloat(latitude)),
         lng: (parseFloat(longitude))
@@ -337,42 +337,34 @@ function initMap(latitude, longitude) {
         zoom: 15,
         center: uluru
     });
+    
+    var contentString = `<div id="show_contact">
+    <h5>Contacter le détenteur</h5>
+    <p> ${prenom} ${nom} </p>
+    <p><b>Pour le contacter : </b></p>
+    <a href="mailto:${email}"> ${email} </a>
+</div>`;
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+
+        
+
     var marker = new google.maps.Marker({
         position: uluru,
         map: map
     });
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
 
 }
-
 //------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
 function selectDetenteur() {
     $.ajax({
 
-            url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
-
-            method: "GET",
-            dataType: 'json'
-        })
-        .done(function (response) {
-
-            $("#detenteur").empty();
-
-            response.data.forEach(function (detenteur) {
-                var prenom = detenteur.prenom
-                var nom = detenteur.nom
-                var option = $(`<option value="${detenteur.id}">${prenom} ${nom}</option>`)
-
-                $("#detenteur").append(option)
-            })
-        })
-
-}
-
-//------------------------Création des choix des détenteurs du formulaire trouvé-------------------------------
-function selectDetenteur() {
-    $.ajax({
-
-        url: "http://localhost:/doudou/doudou-sf/public/api/v1/detenteurs",
+        url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/detenteurs",
         method: "GET",
         dataType: 'json'
     })
@@ -469,7 +461,7 @@ function maPosition(position) {
     var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", latiT);
     $("#coords").append(putLongiT);
     $("#coords").append(putLatiT);
-    console.log(longiT + " " + latiT)
+    console.log("Les points de geolocalisation sont " +longiT + " " + latiT)
     if (longiT != 0 && latiT != 0) {
         setTimeout(function () {
             document.getElementById("geo_ok").style.display = "block";
@@ -480,8 +472,42 @@ function maPosition(position) {
     gpsToAdresse(longiT, latiT);
 }
 
+//------------------------------------------- Convertion des points GPS en adresse -----------------------------------------------------
+function gpsToAdresse(lng, lat) {
 
+    $.ajax({
+            url: "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
+            method: "GET",
+            dataType: 'json'
+        })
+        .done(function (response) {
+            $("#display_adr").empty();
+            var adresse = (response.results[0].formatted_address)
+            
+            console.log("l'adresse est " + adresse)
+            console.log(lng + " " + lat);
+            
+            if (lat == 47.223958599999996 & lng == -1.5408058) {
+                console.log("je suis dans l'adresse")
+                $("#display_adr").empty();
+                adresse = " EPSI 16, boulevard Général de Gaulle 44200 Nantes"
+                var putadresse = $("<input id=\"adresse\"  name=\"adresse\">").attr("value", adresse)
+                putadresse.css("width", "100%")
+                $("#display_adr").append(putadresse)
+                var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", -1.5394009000000324);
+                var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", 47.2060207);
+                $("#coords").append(putLongiT);
+                $("#coords").append(putLatiT);
+                console.log(longiT + " " + latiT)
+            } else {
+                var putadresse = $("<input id=\"adresse\"  name=\"adresse\">").attr("value", adresse)
+                putadresse.css("width", "100%")
+                $("#display_adr").append(putadresse)
+            }
+        })
 
+}
+//------------------------------------------- Convertion adresse en points GPS -----------------------------------------------------
 function adresseToGps() {
     var adresse = document.getElementById("lieu").value;
     console.log(adresse)
@@ -503,38 +529,6 @@ function adresseToGps() {
             $("#coords").append(putLongiT);
             $("#coords").append(putLatiT);
         })
-}
-
-//------------------------------------------- Convertion des points GPS en adresse -----------------------------------------------------
-function gpsToAdresse(lng, lat) {
-    $.ajax({
-            url: "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
-            method: "GET",
-            dataType: 'json'
-        })
-        .done(function (response) {
-            var adresse = (response.results[0].formatted_address)
-            console.log("l'adresse est " + adresse)
-            console.log(lng + " " + lat);
-            if (lat == 47.223958599999996 & lng == -1.5408058) {
-                console.log("je suis dans l'adresse")
-                $("#display_adr").empty();
-                adresse = " EPSI 16, boulevard Général de Gaulle 44200 Nantes"
-                var putadresse = $("<input id=\"adresse\"  name=\"adresse\">").attr("value", adresse)
-                putadresse.css("width", "100%")
-                $("#display_adr").append(putadresse)
-                var putLongiT = $("<input id=\"longitude\"  name=\"longitude\">").attr("value", -1.5394009000000324);
-                var putLatiT = $("<input id=\"latitude\" name=\"latitude\" >").attr("value", 47.2060207);
-                $("#coords").append(putLongiT);
-                $("#coords").append(putLatiT);
-                console.log(longiT + " " + latiT)
-            } else {
-                var putadresse = $("<input id=\"adresse\"  name=\"adresse\">").attr("value", adresse)
-                putadresse.css("width", "100%")
-                $("#display_adr").append(putadresse)
-            }
-        })
-
 }
 //----------------------------------------------Rechercher un doudou---------------------------------------------------------------------
 
@@ -614,7 +608,7 @@ function initAutocomplete() {
         });
 }
 
-
+//--------------------------------------EFFACEMENT DE LA LONGITUDE ET DE LA LATITUDE--------------------------------------------- 
 function eraseCoords() {
     $("#coords").empty();
     var latiT = 0;
@@ -625,4 +619,71 @@ function eraseCoords() {
     $("#coords").append(putLatiT);
 
 }
+//----------------------------------CARTE SHOW DOUDOUS POINTS MAP------------------------------------------------------------------
+function show_dodousPoints() {
+    console.log("je suis dans show doudous")
+    var uluru;
+    var latC, lngC
+    var myLatLngC = {lat:47.218371 , lng:-1.553621};
+       var map = new google.maps.Map(document.getElementById('map_doudou'), {
+           center: myLatLngC,
+           zoom: 10
+         });
 
+    $.ajax({
+       url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudous",
+       method: "GET",
+       dataType: 'json'
+
+   })
+   .done(function (response) {
+       console.log(response) 
+       for( i=0 ; i < response.data.length; i++) {              
+            uluru = {
+               lat: (parseFloat(response.data[i].lat)),
+               lng: (parseFloat(response.data[i].lng)),
+               adr: response.data[i].placeFind,
+               pic: response.data[i].image,
+               pre: response.data[i].personne.prenom,
+               nom: response.data[i].personne.nom,
+               mail: response.data[i].personne.email
+           };
+
+           var show_detail = `<div id="show_contact">
+           <img id ="small_pic" src ="http://localhost:8082/doudou/doudou-sf/public/img/photos/${uluru.pic}">
+           <h5>Contacter le détenteur</h5>
+           <p> ${uluru.pre} ${uluru.nom} </p>
+           <p><b>Pour le contacter : </b></p>
+           <a href="mailto:${uluru.mail}"> ${uluru.mail} </a>
+       </div>`;
+
+           var marker = new google.maps.Marker({
+               map: map,
+               position: uluru
+               
+             });
+           console.log(uluru.pre)   
+           var currentinfo = null;          
+           var infowindow = new google.maps.InfoWindow({              
+               content: show_detail
+             });               
+             google.maps.event.addListener(marker,'click', (function(marker,show_detail,infowindow){ 
+                return function() {
+                    if(currentinfo) { currentinfo.close();} 
+                    infowindow.setContent(show_detail);
+                  
+                    infowindow.open(this.getMap(),this);
+                    currentinfo = infowindow;
+                };
+                
+            })(this,show_detail,infowindow)); 
+            
+            
+       } 
+      
+    
+       })
+      
+  
+}
+    
