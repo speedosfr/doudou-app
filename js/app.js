@@ -297,7 +297,7 @@ function find_doudou() {
     form_data.append("text", lieu);
     form_data.append("text", type);
     form_data.append("text", detenteur);
-    console.log(couleur.val());
+    console.log(lieu.val());
     $.ajax({
 
         url: "http://localhost:8082/doudou/doudou-sf/public/api/v1/doudou/",
@@ -474,19 +474,15 @@ function maPosition(position) {
 
 //------------------------------------------- Convertion des points GPS en adresse -----------------------------------------------------
 function gpsToAdresse(lng, lat) {
-
     $.ajax({
             url: "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDgZVvYJAifmwwN-ufui1FjaDFcbOXEVpw",
             method: "GET",
             dataType: 'json'
         })
         .done(function (response) {
-            $("#display_adr").empty();
             var adresse = (response.results[0].formatted_address)
-            
             console.log("l'adresse est " + adresse)
             console.log(lng + " " + lat);
-            
             if (lat == 47.223958599999996 & lng == -1.5408058) {
                 console.log("je suis dans l'adresse")
                 $("#display_adr").empty();
